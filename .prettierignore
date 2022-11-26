@@ -1,0 +1,15 @@
+.vscode
+.next
+coverage
+.scannerwork
+*.css
+.storybook
+package-lock.json
+tailwind
+storybook-static/
+public/
+graphql.schema.json
+.framework/generated/*
+
+# prettier chokes on templated yml
+infra/ci/helm/templates/**/*.yml
