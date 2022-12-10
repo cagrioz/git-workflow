@@ -1,4 +1,4 @@
-import { Gitgraph } from "@gitgraph/react";
+import { Gitgraph, Orientation, TemplateName } from "@gitgraph/react";
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -12,7 +12,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <Gitgraph options={{ orientation: "horizontal", template: "blackarrow" }}>
+            <Gitgraph options={{ orientation: "horizontal" as Orientation, template: "blackarrow" as TemplateName }}>
                 {(gitgraph) => {
                     // Simulate git commands with Gitgraph API.
                     const master = gitgraph.branch("master");
