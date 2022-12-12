@@ -1,9 +1,18 @@
 import { Gitgraph, Orientation, TemplateName } from "@gitgraph/react";
 import Head from "next/head";
+import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 export default function Home() {
+    const [commits, setCommits] = useState<string[]>(["Initial commit"]);
+    const [commit, setCommit] = useState<string>("");
+
+    function addCommit() {
+        setCommits([...commits, commit]);
+        setCommit("");
+    }
+
     return (
         <div>
             <Head>
@@ -12,22 +21,29 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header />
-            <Gitgraph options={{ orientation: "horizontal" as Orientation, template: "blackarrow" as TemplateName }}>
+            <div className="mx-auto text-center">
+                <input
+                    type="text"
+                    className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+                    placeholder="Commit Message"
+                    onChange={(e) => setCommit(e.target.value)}
+                    value={commit}
+                />
+                <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={addCommit}
+                >
+                    Add Commit
+                </button>
+            </div>
+            <Gitgraph options={{}} key={commits.length}>
                 {(gitgraph) => {
                     // Simulate git commands with Gitgraph API.
                     const master = gitgraph.branch("master");
-                    master.commit("Initial commit");
 
-                    const develop = master.branch("develop");
-                    develop.commit("Add TypeScript");
-
-                    const aFeature = develop.branch("a-feature");
-                    aFeature.commit("Make it work").commit("Make it right").commit("Make it fast");
-
-                    develop.merge(aFeature);
-                    develop.commit("Prepare v1");
-
-                    master.merge(develop).tag("v1.0.0");
+                    commits.forEach((commit) => {
+                        master.commit(commit);
+                    });
                 }}
             </Gitgraph>
             <Footer />
