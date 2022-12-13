@@ -1,4 +1,4 @@
 function Login() {
-    return <div>index</div>;
+    return <div>Login screen</div>;
 }
 export default Login;
