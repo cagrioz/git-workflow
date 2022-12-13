@@ -5,12 +5,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 export default function Home() {
-    const [commits, setCommits] = useState<string[]>(["Initial commit"]);
-    const [commit, setCommit] = useState<string>("");
+    const [status, setStatus] = useState<string[]>(["Initial command"]);
+    const [command, setCommand] = useState<string>("");
 
-    function addCommit() {
-        setCommits([...commits, commit]);
-        setCommit("");
+    function addCommand() {
+        setStatus([...status, command]);
+        setCommand("");
     }
 
     return (
@@ -25,24 +25,32 @@ export default function Home() {
                 <input
                     type="text"
                     className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-                    placeholder="Commit Message"
-                    onChange={(e) => setCommit(e.target.value)}
-                    value={commit}
+                    placeholder="command Message"
+                    onChange={(e) => setCommand(e.target.value)}
+                    value={command}
                 />
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={addCommit}
+                    onClick={addCommand}
                 >
-                    Add Commit
+                    Add command
                 </button>
             </div>
-            <Gitgraph options={{}} key={commits.length}>
+            <Gitgraph options={{}} key={status.length}>
                 {(gitgraph) => {
                     // Simulate git commands with Gitgraph API.
                     const master = gitgraph.branch("master");
+                    master.commit("Initial commit");
 
-                    commits.forEach((commit) => {
-                        master.commit(commit);
+                    /* TODO: Implement the complex ops, and checks with branch system */
+                    status.forEach((command) => {
+                        if (command.includes("git commit")) {
+                            master.commit(command);
+                        } else if (command.includes("git checkout")) {
+                            const dev = master.branch("dev").commit('Branch "dev" created');
+                        } else if (command.includes("git merge")) {
+                            master.merge(command);
+                        }
                     });
                 }}
             </Gitgraph>
