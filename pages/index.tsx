@@ -42,14 +42,19 @@ export default function Home() {
                     const master = gitgraph.branch("master");
                     master.commit("Initial commit");
 
+                    let dev;
                     /* TODO: Implement the complex ops, and checks with branch system */
                     status.forEach((command) => {
-                        if (command.includes("git commit")) {
-                            master.commit(command);
+                        // Split commit message from command
+                        if (command.includes("git commit -m")) {
+                            const message = command.split("-m")[1];
+                            // Remove the first and last character
+                            const messageWithoutQuotes = message.substring(1, message.length - 1);
+                            master.commit(messageWithoutQuotes);
                         } else if (command.includes("git checkout")) {
-                            const dev = master.branch("dev").commit('Branch "dev" created');
+                            dev = master.branch("dev").commit('Branch "dev" created');
                         } else if (command.includes("git merge")) {
-                            master.merge(command);
+                            master.merge(dev);
                         }
                     });
                 }}
