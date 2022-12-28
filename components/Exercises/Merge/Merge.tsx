@@ -40,7 +40,7 @@ function validateCommand(command: string) {
     return true;
 }
 
-function Branch() {
+function Merge() {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -70,10 +70,7 @@ function Branch() {
         }
 
         // Check if the command is correct
-        const message = command.split("-b");
-        console.log(message);
-
-        if (message[0] == "git checkout ") {
+        if (command == "git merge master") {
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
         } else {
@@ -94,6 +91,7 @@ function Branch() {
                     const master = gitgraph.branch("master");
                     setBranches([master]);
                     master.commit("Initial commit");
+                    const feature = gitgraph.branch("feature").commit("New feature");
 
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
@@ -115,6 +113,7 @@ function Branch() {
                                 branch.checkout().commit("Checkout branch");
                             }
                         } else if (message[1] === "merge") {
+                            master.merge(feature);
                         }
                     });
                 }}
@@ -162,4 +161,4 @@ function Branch() {
         </>
     );
 }
-export default Branch;
+export default Merge;

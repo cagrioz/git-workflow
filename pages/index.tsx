@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
+import Merge from "../components/Exercises/Merge";
 
 export default function Home() {
     return (
@@ -41,6 +42,18 @@ export default function Home() {
                                     </p>
                                 </div>
                                 <Branch />
+                            </div>
+
+                            <div className="flex flex-col gap-5">
+                                <div className="flex flex-col gap-2">
+                                    <h2 className="text-4xl font-bold">Exercise 3 - Merge feature branch to master</h2>
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptate,
+                                        quod, quia, voluptates quae voluptatibus quibusdam voluptatum quos quas quidem
+                                        nesciunt. Quisquam, quae.
+                                    </p>
+                                </div>
+                                <Merge />
                             </div>
                         </div>
                     </div>
