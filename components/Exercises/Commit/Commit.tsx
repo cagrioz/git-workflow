@@ -41,8 +41,21 @@ function validateCommand(command: string) {
 }
 
 function Commit() {
-    // use snackbar
-    const [openSnackbar, closeSnackbar] = useSnackbar();
+    // Success snackbar
+    const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
+        style: {
+            backgroundColor: "#4caf50",
+            color: "#fff",
+        },
+    });
+
+    // Error snackbar
+    const [openErrorSnackbar, closeErrorSnackbar] = useSnackbar({
+        style: {
+            backgroundColor: "#f44336",
+            color: "#fff",
+        },
+    });
 
     const [branches, setBranches] = useState<any[]>([]);
     const [executedCommands, setExecutedCommands] = useState<string[]>([]);
@@ -50,11 +63,9 @@ function Commit() {
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
 
     function addCommand() {
-        console.log("Add command");
-
         // Check if the command is valid
         if (!validateCommand(command)) {
-            openSnackbar("Command not valid");
+            openErrorSnackbar("Command not valid");
             return;
         }
 
@@ -63,10 +74,11 @@ function Commit() {
         console.log(message);
 
         if (message[0] == "git commit -m ") {
-            openSnackbar("Correct command! You can now continue to the next exercise");
+            // Snackbar green background
+            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
         } else {
-            openSnackbar("Command not correct");
+            openErrorSnackbar("Command not correct");
             return;
         }
 
@@ -83,8 +95,6 @@ function Commit() {
                     const master = gitgraph.branch("master");
                     setBranches([master]);
                     master.commit("Initial commit");
-
-                    console.log(executedCommands);
 
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
@@ -108,41 +118,47 @@ function Commit() {
                         } else if (message[1] === "merge") {
                         }
                     });
-
-                    console.log(branches);
                 }}
             </Gitgraph>
-            <div
-                className={`justify-center items-center py-8 flex gap-5 my-5 ${
-                    exerciseCompleted ? "bg-green-500" : "bg-gray-200"
-                }`}
-            >
-                <input
-                    type="text"
-                    className={`border-2 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none ${
-                        exerciseCompleted ? "bg-gray-500" : "bg-white"
-                    }}`}
-                    placeholder="Enter git command"
-                    onChange={(e) => setCommand(e.target.value)}
-                    value={command}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            addCommand();
-                        }
-                    }}
-                    // Disable the input if the exercise is completed
-                    disabled={exerciseCompleted}
-                />
-                <button
-                    className={` text-white font-bold px-4 rounded h-9 ${
-                        exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
-                    }}`}
-                    onClick={addCommand}
-                    // Disable the button if the exercise is completed
-                    disabled={exerciseCompleted}
+            <div className="flex flex-col">
+                {exerciseCompleted && (
+                    <div className="bg-green-500 text-white font-bold rounded-t px-4 py-2">
+                        <p>Exercise completed</p>
+                        <p>Answer: {executedCommands[0]}</p>
+                    </div>
+                )}
+                <div
+                    className={`justify-center items-center py-8 flex gap-5 my-5 ${
+                        exerciseCompleted ? "bg-green-500" : "bg-gray-200"
+                    }`}
                 >
-                    Add command
-                </button>
+                    <input
+                        type="text"
+                        className={`border-2 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none ${
+                            exerciseCompleted ? "bg-gray-500" : "bg-white"
+                        }}`}
+                        placeholder="Enter git command"
+                        onChange={(e) => setCommand(e.target.value)}
+                        value={command}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                addCommand();
+                            }
+                        }}
+                        // Disable the input if the exercise is completed
+                        disabled={exerciseCompleted}
+                    />
+                    <button
+                        className={` text-white font-bold px-4 rounded h-9 ${
+                            exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
+                        }}`}
+                        onClick={addCommand}
+                        // Disable the button if the exercise is completed
+                        disabled={exerciseCompleted}
+                    >
+                        Add command
+                    </button>
+                </div>
             </div>
         </>
     );
