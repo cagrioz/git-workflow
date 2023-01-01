@@ -5,8 +5,18 @@ import Header from "../components/Header";
 import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
 import Merge from "../components/Exercises/Merge";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+    const [exercises, setExercises] = useState<any[]>([]);
+
+    // Fetch exercises from API
+    useEffect(() => {
+        fetch("http://localhost:8000/exercises")
+            .then((res) => res.json())
+            .then((data) => setExercises(data));
+    }, []);
+
     return (
         <div>
             <Head>
@@ -20,41 +30,20 @@ export default function Home() {
                 <SnackbarProvider>
                     <div className="container mx-auto">
                         <div className="flex flex-col gap-10">
-                            <div className="flex flex-col gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <h2 className="text-4xl font-bold">Exercise 1 - Make 1 commit with message</h2>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptate,
-                                        quod, quia, voluptates quae voluptatibus quibusdam voluptatum quos quas quidem
-                                        nesciunt. Quisquam, quae.
-                                    </p>
-                                </div>
-                                <Commit />
-                            </div>
-
-                            <div className="flex flex-col gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <h2 className="text-4xl font-bold">Exercise 2 - Create a new feature branch</h2>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptate,
-                                        quod, quia, voluptates quae voluptatibus quibusdam voluptatum quos quas quidem
-                                        nesciunt. Quisquam, quae.
-                                    </p>
-                                </div>
-                                <Branch />
-                            </div>
-
-                            <div className="flex flex-col gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <h2 className="text-4xl font-bold">Exercise 3 - Merge feature branch to master</h2>
-                                    <p>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptate,
-                                        quod, quia, voluptates quae voluptatibus quibusdam voluptatum quos quas quidem
-                                        nesciunt. Quisquam, quae.
-                                    </p>
-                                </div>
-                                <Merge />
-                            </div>
+                            {exercises.length > 0 &&
+                                exercises.map((exercise) => {
+                                    return (
+                                        <div className="flex flex-col gap-5" key={exercise._exerciseName}>
+                                            <div className="flex flex-col gap-2">
+                                                <h2 className="text-4xl font-bold">{exercise._exerciseName}</h2>
+                                                <p className="whitespace-pre-line mt-4">{exercise._description}</p>
+                                            </div>
+                                            {exercise._exerciseId === 1 && <Commit />}
+                                            {exercise._exerciseId === 2 && <Branch />}
+                                            {exercise._exerciseId === 3 && <Merge />}
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </div>
                 </SnackbarProvider>
