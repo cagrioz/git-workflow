@@ -15,7 +15,7 @@ const gitGraphOptions = {
     orientation: Orientation.Horizontal,
 };
 
-const supportedCommands = ["commit", "checkout", "merge"];
+const supportedCommands = ["commit", "checkout", "merge", "branch"];
 
 // Git command validation
 function validateCommand(command: string) {
@@ -71,9 +71,9 @@ function Branch() {
 
         // Check if the command is correct
         const message = command.split("-b");
-        console.log(message);
+        const message2 = command.split("git branch ");
 
-        if (message[0] == "git checkout ") {
+        if (message[0] == "git checkout " || (message2 && message2[1].length > 0)) {
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
         } else {
@@ -101,8 +101,11 @@ function Branch() {
                         if (message[1] === "commit") {
                             // Commit to the current branch that is active
                             master.commit(message[2]);
-                        } else if (message[1] === "checkout" && message[2] === "-b") {
-                            const newBranch = master.branch(message[3]).commit("New branch");
+                        } else if (
+                            (message[1] === "checkout" && message[2] === "-b") ||
+                            (message[1] === "branch" && message[2].length > 0)
+                        ) {
+                            const newBranch = master.branch(message[3] || message[2]).commit("New branch");
 
                             // Add the new branch to the list of branches if it doesn't exist
                             if (!branches.find((branch) => branch.name === newBranch.name)) {
