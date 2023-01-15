@@ -5,7 +5,7 @@ import { useSnackbar } from "react-simple-snackbar";
 
 const gitGraphOptions = {
     template: templateExtend(TemplateName.Metro, {
-        colors: ["#666", "#0064e6", "#0F0", "#F00"],
+        colors: ["#666", "#0064e6", "#00ca00", "#F00"],
         branch: {
             lineWidth: 10,
             spacingX: 50,
@@ -94,6 +94,8 @@ function Branch() {
                     const master = gitgraph.branch("master");
                     setBranches([master]);
                     master.commit("Initial commit");
+
+                    master.branch("feature-1").commit("Feature 1 commit");
 
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
