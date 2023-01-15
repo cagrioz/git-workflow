@@ -6,6 +6,7 @@ import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
 import Merge from "../components/Exercises/Merge";
 import { useEffect, useState } from "react";
+import CommitMerge from "../components/Exercises/CommitMerge";
 
 export default function Home() {
     const [exercises, setExercises] = useState<any[]>([]);
@@ -44,6 +45,16 @@ export default function Home() {
                                         </div>
                                     );
                                 })}
+                            <div className="flex flex-col gap-5">
+                                <div className="flex flex-col gap-2">
+                                    <h2 className="text-4xl font-bold">Test</h2>
+                                    <p className="whitespace-pre-line mt-4">
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio molestias
+                                        asperiores animi sequi velit maxime itaque at nulla tempore id.
+                                    </p>
+                                </div>
+                                <CommitMerge />
+                            </div>
                         </div>
                     </div>
                 </SnackbarProvider>
