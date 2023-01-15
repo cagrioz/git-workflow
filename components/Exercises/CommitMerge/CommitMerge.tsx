@@ -15,7 +15,7 @@ const gitGraphOptions = {
     orientation: Orientation.Horizontal,
 };
 
-const supportedCommands = ["commit", "checkout", "merge"];
+const supportedCommands = ["commit", "checkout", "merge", "branch"];
 
 // Git command validation
 function validateCommand(command: string) {
@@ -40,7 +40,7 @@ function validateCommand(command: string) {
     return true;
 }
 
-function Merge() {
+function CommitMerge() {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -61,6 +61,7 @@ function Merge() {
     const [executedCommands, setExecutedCommands] = useState<string[]>([]);
     const [command, setCommand] = useState<string>("");
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
+    const [currentStep, setCurrentStep] = useState<number>(0);
 
     function addCommand() {
         // Check if the command is valid
@@ -69,16 +70,35 @@ function Merge() {
             return;
         }
 
-        // Check if the command is correct
-        if (command == "git merge master") {
-            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
-            setExerciseCompleted(true);
-        } else {
-            openErrorSnackbar("Command not correct");
-            return;
+        if (currentStep === 0) {
+            // Check if the command is correct
+            const message = command.split("-b");
+            const message2 = command.split("git branch ");
+
+            if (message[0] == "git checkout " || (message2 && message2[1].length > 0)) {
+                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            } else {
+                openErrorSnackbar("Command not correct");
+                return;
+            }
+        } else if (currentStep === 1) {
+            // Check if the command is correct
+            const message = command.split("'");
+
+            if (message[0] == "git commit -m ") {
+                // Snackbar green background
+                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+
+                setExerciseCompleted(true);
+            } else {
+                openErrorSnackbar("Command not correct");
+                return;
+            }
         }
 
         setExecutedCommands([...executedCommands, command]);
+
+        setCurrentStep((prevStep) => prevStep + 1);
 
         // Add the command to the status
         setCommand("");
@@ -91,19 +111,18 @@ function Merge() {
                     const master = gitgraph.branch("master");
                     setBranches([master]);
                     master.commit("Initial commit");
-                    const feature = master.branch("feature").commit("New feature");
-                    master.merge(feature);
-
-                    const feature2 = master.branch("feature-2").commit("New feature").commit("New feature");
 
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
 
                         if (message[1] === "commit") {
                             // Commit to the current branch that is active
-                            master.commit(message[2]);
-                        } else if (message[1] === "checkout" && message[2] === "-b") {
-                            const newBranch = master.branch(message[3]).commit("New branch");
+                            gitgraph.commit(message[2]);
+                        } else if (
+                            (message[1] === "checkout" && message[2] === "-b") ||
+                            (message[1] === "branch" && message[2].length > 0)
+                        ) {
+                            const newBranch = master.branch(message[3] || message[2]).commit("New branch");
 
                             // Add the new branch to the list of branches if it doesn't exist
                             if (!branches.find((branch) => branch.name === newBranch.name)) {
@@ -116,7 +135,6 @@ function Merge() {
                                 branch.checkout().commit("Checkout branch");
                             }
                         } else if (message[1] === "merge") {
-                            master.merge(feature2);
                         }
                     });
                 }}
@@ -125,7 +143,10 @@ function Merge() {
                 {exerciseCompleted && (
                     <div className="bg-green-500 text-white font-bold rounded-t px-4 py-2">
                         <p>Exercise completed</p>
-                        <p>Answer: {executedCommands[0]}</p>
+                        <p>Answer:</p>
+                        {executedCommands.map((el) => (
+                            <p>{el}</p>
+                        ))}
                     </div>
                 )}
                 <div
@@ -164,4 +185,4 @@ function Merge() {
         </>
     );
 }
-export default Merge;
+export default CommitMerge;
