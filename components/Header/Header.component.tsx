@@ -12,6 +12,12 @@ function Header() {
                         <a href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700">
                             Home
                         </a>
+                        <a href="/workflows" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700">
+                            Workflows
+                        </a>
+                        <a href="/exercises" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700">
+                            Exercises
+                        </a>
                         <a href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700 ml-4">
                             Logout
                         </a>
