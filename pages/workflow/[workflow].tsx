@@ -9,8 +9,6 @@ export async function getServerSideProps({ params }: any) {
     const res = await axios.get(`http://localhost:8000/workflow/${workflow}`);
     const data = await res.data;
 
-    console.log(workflow);
-
     return {
         props: {
             workflow: data,
@@ -19,13 +17,16 @@ export async function getServerSideProps({ params }: any) {
 }
 
 const Workflow = ({ workflow }: any) => {
-    console.log(workflow);
     return (
         <div className="container mx-auto">
             <h1 className="text-5xl my-12 font-medium">
                 Workflow: <span className="font-bold"> {workflow._workflowName}</span>
             </h1>
-            <p className="text-xl">{workflow._workflowDescription}</p>
+            <div
+                className="text-xl mb-12 flex gap-5 flex-col"
+                dangerouslySetInnerHTML={{ __html: workflow._workflowDescription }}
+            ></div>
+
             <SnackbarProvider>
                 <div className="flex flex-col gap-10">
                     {workflow._exerciseList.length > 0 &&
