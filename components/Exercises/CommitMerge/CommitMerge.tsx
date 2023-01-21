@@ -88,7 +88,14 @@ function CommitMerge() {
             if (message[0] == "git commit -m ") {
                 // Snackbar green background
                 openSuccessSnackbar("Correct command! You can now continue to the next exercise");
-
+            } else {
+                openErrorSnackbar("Command not correct");
+                return;
+            }
+        } else if (currentStep === 2) {
+            // Check if the command is correct
+            if (command == "git merge master") {
+                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
                 setExerciseCompleted(true);
             } else {
                 openErrorSnackbar("Command not correct");
@@ -112,6 +119,10 @@ function CommitMerge() {
                     setBranches([master]);
                     master.commit("Initial commit");
 
+                    master.commit("Add index.html");
+
+                    let newBranch: any;
+
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
 
@@ -122,7 +133,7 @@ function CommitMerge() {
                             (message[1] === "checkout" && message[2] === "-b") ||
                             (message[1] === "branch" && message[2].length > 0)
                         ) {
-                            const newBranch = master.branch(message[3] || message[2]).commit("New branch");
+                            newBranch = master.branch(message[3] || message[2]).commit("New branch");
 
                             // Add the new branch to the list of branches if it doesn't exist
                             if (!branches.find((branch) => branch.name === newBranch.name)) {
@@ -131,10 +142,10 @@ function CommitMerge() {
                         } else if (message[1] === "checkout") {
                             const branch = branches.find((branch) => branch.name === message[2]);
                             if (branch) {
-                                console.log(branch);
                                 branch.checkout().commit("Checkout branch");
                             }
                         } else if (message[1] === "merge") {
+                            master.merge(newBranch);
                         }
                     });
                 }}

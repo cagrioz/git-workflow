@@ -47,10 +47,15 @@ export default function Home() {
                                 })}
                             <div className="flex flex-col gap-5">
                                 <div className="flex flex-col gap-2">
-                                    <h2 className="text-4xl font-bold">Test</h2>
-                                    <p className="whitespace-pre-line mt-4">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio molestias
-                                        asperiores animi sequi velit maxime itaque at nulla tempore id.
+                                    <h2 className="text-4xl font-bold">
+                                        Create a new branch and make 1 commit and merge
+                                    </h2>
+                                    <p className="whitespace-pre-line mt-4 max-w-5xl">
+                                        Learn the process of creating a new feature branch in a Git repository, making
+                                        one commit to it, and then using the git merge command to incorporate those
+                                        changes into the master branch. This exercise will cover the basic workflow of
+                                        branching, committing, and merging changes in Git, allowing you to effectively
+                                        collaborate on code and make your changes available to others in the team.
                                     </p>
                                 </div>
                                 <CommitMerge />
