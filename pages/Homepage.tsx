@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import Workflows from "../components/Workflows";
+import Header from "@app/components/Header";
+import Workflows from "@app/components/Workflows";
 
 function Homepage() {
     return (

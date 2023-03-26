@@ -6,7 +6,7 @@ import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
 import Merge from "../components/Exercises/Merge";
 import { useEffect, useState } from "react";
-import CommitMerge from "../components/Exercises/CommitMerge";
+import CommitMerge from "@app/components/Exercises/CommitMerge";
 
 export default function Home() {
     const [exercises, setExercises] = useState<any[]>([]);

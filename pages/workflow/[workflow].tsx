@@ -1,7 +1,7 @@
 import axios from "axios";
-import Branch from "../../components/Exercises/Branch";
-import Commit from "../../components/Exercises/Commit";
-import Merge from "../../components/Exercises/Merge";
+import Branch from "@app/components/Exercises/Branch";
+import Commit from "@app/components/Exercises/Commit";
+import Merge from "@app/components/Exercises/Merge";
 import SnackbarProvider from "react-simple-snackbar";
 
 export async function getServerSideProps({ params }: any) {
