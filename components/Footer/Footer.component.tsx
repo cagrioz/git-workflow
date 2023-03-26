@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Footer() {
     // Get the current year
     const year = new Date().getFullYear();
@@ -7,20 +9,20 @@ function Footer() {
             <div className="container mx-auto">
                 <div className="flex flex-wrap items-center justify-between py-12">
                     <div className="flex items-center">
-                        <a href="/" className="text-lg font-bold text-gray-900">
+                        <Link href="/" className="text-lg font-bold text-gray-900">
                             GitHub Workflow Teacher
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <a href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700">
+                        <Link href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700">
                             Privacy Policy
-                        </a>
-                        <a href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700 ml-4">
+                        </Link>
+                        <Link href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700 ml-4">
                             Terms of Service
-                        </a>
-                        <a href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700 ml-4">
+                        </Link>
+                        <Link href="#" className="py-2 px-3 text-gray-900 font-medium hover:text-gray-700 ml-4">
                             Contact Us
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

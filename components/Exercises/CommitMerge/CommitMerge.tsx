@@ -155,8 +155,8 @@ function CommitMerge() {
                     <div className="bg-green-500 text-white font-bold rounded-t px-4 py-2">
                         <p>Exercise completed</p>
                         <p>Answer:</p>
-                        {executedCommands.map((el) => (
-                            <p>{el}</p>
+                        {executedCommands.map((el, i) => (
+                            <p key={i}>{el}</p>
                         ))}
                     </div>
                 )}
