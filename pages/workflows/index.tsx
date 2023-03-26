@@ -21,7 +21,7 @@ const Workflows = ({ workflows }: any) => {
             <div className="flex flex-col gap-5">
                 {workflows.map((workflow: any, i: number) => (
                     <div className="flex flex-col gap-2 py-10 px-16 bg-slate-200" key={i}>
-                        <a href={`/workflows/${workflow._workflowId}`} className="text-2xl font-bold text-gray-900">
+                        <a href={`/workflow/${workflow._workflowId}`} className="text-2xl font-bold text-gray-900">
                             {workflow._workflowName}
                         </a>
                         <p className="text-gray-700">{workflow.description}</p>
