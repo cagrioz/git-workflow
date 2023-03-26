@@ -19,9 +19,9 @@ const Workflows = ({ workflows }: any) => {
             <h1 className="text-5xl my-12 font-bold">Workflows</h1>
 
             <div className="flex flex-col gap-5">
-                {workflows.map((workflow: any) => (
-                    <div className="flex flex-col gap-2 py-10 px-16 bg-slate-200">
-                        <a href={`/workflow/${workflow._workflowId}`} className="text-2xl font-bold text-gray-900">
+                {workflows.map((workflow: any, i: number) => (
+                    <div className="flex flex-col gap-2 py-10 px-16 bg-slate-200" key={i}>
+                        <a href={`/workflows/${workflow._workflowId}`} className="text-2xl font-bold text-gray-900">
                             {workflow._workflowName}
                         </a>
                         <p className="text-gray-700">{workflow.description}</p>
