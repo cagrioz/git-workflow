@@ -26,7 +26,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="min-h-screen">
-                <Header />
+                <Header loggedIn={true} />
 
                 <SnackbarProvider>
                     <div className="container mx-auto">

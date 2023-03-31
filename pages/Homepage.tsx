@@ -5,7 +5,7 @@ function Homepage() {
     return (
         <section>
             <h1>Homepage</h1>
-            <Header />
+            <Header loggedIn={true} />
             <Workflows />
         </section>
     );
