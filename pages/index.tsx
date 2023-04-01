@@ -10,9 +10,19 @@ import CommitMerge from "@app/components/Exercises/CommitMerge";
 
 export default function Home() {
     const [exercises, setExercises] = useState<any[]>([]);
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
     // Fetch exercises from API
     useEffect(() => {
+        // Fetch localStorage id and username
+        const userId = localStorage.getItem("id");
+        const username = localStorage.getItem("username");
+
+        if (userId && username) {
+            console.log("User is logged in");
+            setLoggedIn(true);
+        }
+
         fetch("http://localhost:8000/exercises")
             .then((res) => res.json())
             .then((data) => setExercises(data));
@@ -26,7 +36,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="min-h-screen">
-                <Header loggedIn={true} />
+                <Header loggedIn={loggedIn} />
 
                 <SnackbarProvider>
                     <div className="container mx-auto">

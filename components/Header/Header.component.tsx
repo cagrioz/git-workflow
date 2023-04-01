@@ -28,7 +28,15 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                                 <Link href="/profile" className="py-2 px-3 font-medium">
                                     Profile
                                 </Link>
-                                <Link href="#" className="py-2 px-3 font-medium ml-4">
+                                <Link
+                                    href="#"
+                                    className="py-2 px-3 font-medium ml-4"
+                                    onClick={() => {
+                                        localStorage.removeItem("id");
+                                        localStorage.removeItem("username");
+                                        window.location.href = "/login";
+                                    }}
+                                >
                                     Logout
                                 </Link>
                             </>

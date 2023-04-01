@@ -4,9 +4,11 @@ import Commit from "@app/components/Exercises/Commit";
 import Merge from "@app/components/Exercises/Merge";
 import SnackbarProvider from "react-simple-snackbar";
 
+import { capitalize } from "lodash";
+
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
-    const res = await axios.get(`http://localhost:8000/workflow/${workflow}`);
+    const res = await axios.get(`http://localhost:8000/workflows/course?workflowName=${workflow}&userId=11`);
     const data = await res.data;
 
     return {
@@ -20,26 +22,26 @@ const Workflow = ({ workflow }: any) => {
     return (
         <div className="container mx-auto">
             <h1 className="text-5xl my-12 font-medium">
-                Workflow: <span className="font-bold"> {workflow._workflowName}</span>
+                Workflow: <span className="font-bold"> {capitalize(workflow)} Workflow</span>
             </h1>
             <div
                 className="text-xl mb-12 flex gap-5 flex-col"
-                dangerouslySetInnerHTML={{ __html: workflow._workflowDescription }}
+                dangerouslySetInnerHTML={{ __html: workflow.workflowDescription }}
             ></div>
 
             <SnackbarProvider>
                 <div className="flex flex-col gap-10">
-                    {workflow._exerciseList.length > 0 &&
-                        workflow._exerciseList.map((exercise: any) => {
+                    {workflow.exerciseList?.length > 0 &&
+                        workflow.exerciseList.map((exercise: any) => {
                             return (
-                                <div className="flex flex-col gap-5" key={exercise._exerciseName}>
+                                <div className="flex flex-col gap-5" key={exercise.exerciseName}>
                                     <div className="flex flex-col gap-2">
-                                        <h2 className="text-4xl font-bold">{exercise._exerciseName}</h2>
-                                        <p className="whitespace-pre-line mt-4">{exercise._description}</p>
+                                        <h2 className="text-4xl font-bold">{exercise.exerciseName}</h2>
+                                        <p className="whitespace-pre-line mt-4">{exercise.description}</p>
                                     </div>
-                                    {exercise._exerciseId === 1 && <Commit />}
-                                    {exercise._exerciseId === 2 && <Branch />}
-                                    {exercise._exerciseId === 3 && <Merge />}
+                                    {exercise.exerciseId === 1 && <Commit />}
+                                    {exercise.exerciseId === 2 && <Branch />}
+                                    {exercise.exerciseId === 3 && <Merge />}
                                 </div>
                             );
                         })}
