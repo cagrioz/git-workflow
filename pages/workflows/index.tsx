@@ -1,4 +1,7 @@
+import Footer from "@app/components/Footer";
+import Header from "@app/components/Header";
 import axios from "axios";
+import Link from "next/link";
 
 export async function getServerSideProps() {
     const res = await axios.get(`http://localhost:8000/workflows`);
@@ -12,23 +15,25 @@ export async function getServerSideProps() {
 }
 
 const Workflows = ({ workflows }: any) => {
-    console.log(workflows);
-
     return (
-        <div className="container mx-auto">
-            <h1 className="text-5xl my-12 font-bold">Workflows</h1>
-
-            <div className="flex flex-col gap-5">
-                {workflows.map((workflow: any, i: number) => (
-                    <div className="flex flex-col gap-2 py-10 px-16 bg-slate-200" key={i}>
-                        <a href={`/workflow/${workflow._workflowId}`} className="text-2xl font-bold text-gray-900">
-                            {workflow._workflowName}
-                        </a>
-                        <p className="text-gray-700">{workflow.description}</p>
-                    </div>
-                ))}
+        <>
+            <Header loggedIn={true} />
+            <div className="container mx-auto mb-16">
+                <h1 className="text-5xl mt-24 mb-16 font-bold text-primary text-center">Workflows</h1>
+                <div className="grid grid-cols-3 mt-10 gap-8">
+                    {workflows.map((workflow: any, i: number) => (
+                        <Link
+                            href={`/workflow/${workflow.workflowId}`}
+                            className="flex flex-col h-52 items-center justify-center rounded-2xl gap-2 py-10 px-16 bg-primaryLight hover:bg-primary transition-all duration-200 ease-in-out"
+                            key={i}
+                        >
+                            <h3 className="text-2xl font-bold text-white">{workflow.workflowName}</h3>
+                        </Link>
+                    ))}
+                </div>
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 
