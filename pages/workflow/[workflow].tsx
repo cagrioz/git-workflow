@@ -4,9 +4,11 @@ import Commit from "@app/components/Exercises/Commit";
 import Merge from "@app/components/Exercises/Merge";
 import SnackbarProvider from "react-simple-snackbar";
 
+import { capitalize } from "lodash";
+
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
-    const res = await axios.get(`http://localhost:8000/workflows/${workflow}`);
+    const res = await axios.get(`http://localhost:8000/workflows/course?workflowName=${workflow}&userId=11`);
     const data = await res.data;
 
     return {
@@ -17,11 +19,10 @@ export async function getServerSideProps({ params }: any) {
 }
 
 const Workflow = ({ workflow }: any) => {
-    console.log(workflow);
     return (
         <div className="container mx-auto">
             <h1 className="text-5xl my-12 font-medium">
-                Workflow: <span className="font-bold"> {workflow.workflowName}</span>
+                Workflow: <span className="font-bold"> {capitalize(workflow)} Workflow</span>
             </h1>
             <div
                 className="text-xl mb-12 flex gap-5 flex-col"
@@ -30,7 +31,7 @@ const Workflow = ({ workflow }: any) => {
 
             <SnackbarProvider>
                 <div className="flex flex-col gap-10">
-                    {workflow._exerciseList.length > 0 &&
+                    {workflow.exerciseList?.length > 0 &&
                         workflow.exerciseList.map((exercise: any) => {
                             return (
                                 <div className="flex flex-col gap-5" key={exercise.exerciseName}>
