@@ -49,9 +49,15 @@ export default function Home() {
                                                 <h2 className="text-4xl font-bold">{exercise._exerciseName}</h2>
                                                 <p className="whitespace-pre-line mt-4">{exercise._description}</p>
                                             </div>
-                                            {exercise._exerciseId === 1 && <Commit />}
-                                            {exercise._exerciseId === 2 && <Branch />}
-                                            {exercise._exerciseId === 3 && <Merge />}
+                                            {exercise._exerciseId === 1 && (
+                                                <Commit active={true} updateScore={function () {}} />
+                                            )}
+                                            {exercise._exerciseId === 2 && (
+                                                <Branch active={true} updateScore={function () {}} />
+                                            )}
+                                            {exercise._exerciseId === 3 && (
+                                                <Merge active={true} updateScore={function () {}} />
+                                            )}
                                         </div>
                                     );
                                 })}
