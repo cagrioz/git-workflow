@@ -6,8 +6,10 @@ import LoginIllustration from "@app/assets/login_illustration.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function Login() {
+    const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -36,7 +38,11 @@ export default function Login() {
                     if (res.data.id && res.data.username) {
                         localStorage.setItem("id", res.data.id);
                         localStorage.setItem("username", res.data.username);
-                        window.location.href = "/";
+                        // Route to home directory and add userId=res.data.id to the context
+                        router.push({
+                            pathname: "/",
+                            query: { userId: res.data.id },
+                        });
                     }
 
                     return;

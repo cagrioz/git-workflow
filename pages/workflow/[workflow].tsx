@@ -8,13 +8,12 @@ import { capitalize } from "lodash";
 import Header from "@app/components/Header";
 import Footer from "@app/components/Footer";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
     const res = await axios.get(`http://localhost:8000/workflows/course?workflowName=${workflow}&userId=1`);
     const data = await res.data;
-
-    console.log(data);
 
     return {
         props: {
@@ -25,11 +24,20 @@ export async function getServerSideProps({ params }: any) {
 }
 
 const Workflow = ({ workflow, workflowName }: any) => {
+    const router = useRouter();
+
     const [score, setScore] = useState(0);
     const [reset, setReset] = useState(false);
 
     useEffect(() => {
         setScore(workflow.score.completed);
+
+        // get user id
+        const userId = localStorage.getItem("id");
+        router.push({
+            pathname: `/workflow/${workflowName}`,
+            query: { userId },
+        });
     }, []);
 
     // Update score

@@ -4,6 +4,8 @@ import axios from "axios";
 import Link from "next/link";
 
 import { capitalize } from "lodash";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
     const res = await axios.get(`http://localhost:8000/workflows`);
@@ -17,6 +19,16 @@ export async function getServerSideProps() {
 }
 
 const Workflows = ({ workflows }: any) => {
+    const router = useRouter();
+
+    useEffect(() => {
+        // get user id
+        const userId = localStorage.getItem("id");
+        router.push({
+            query: { userId },
+        });
+    }, []);
+
     return (
         <>
             <Header loggedIn={true} />
