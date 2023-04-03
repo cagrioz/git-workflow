@@ -40,7 +40,7 @@ function validateCommand(command: string) {
     return true;
 }
 
-function Commit() {
+function Commit({ active, updateScore }: { active: boolean; updateScore: any }) {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -62,6 +62,8 @@ function Commit() {
     const [command, setCommand] = useState<string>("");
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
 
+    const disabled = !active || exerciseCompleted ? true : false;
+
     function addCommand() {
         // Check if the command is valid
         if (!validateCommand(command)) {
@@ -77,6 +79,7 @@ function Commit() {
             // Snackbar green background
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
+            updateScore((prevScore: number) => prevScore + 1);
         } else {
             openErrorSnackbar("Command not correct");
             return;
@@ -148,16 +151,26 @@ function Commit() {
                         // Disable the input if the exercise is completed
                         disabled={exerciseCompleted}
                     />
-                    <button
-                        className={` text-white font-bold px-4 rounded h-9 ${
-                            exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
-                        }}`}
-                        onClick={addCommand}
-                        // Disable the button if the exercise is completed
-                        disabled={exerciseCompleted}
-                    >
-                        Add command
-                    </button>
+                    {!disabled && (
+                        <button
+                            className={`text-white font-bold px-4 rounded h-9 ${
+                                exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
+                            }`}
+                            onClick={addCommand}
+                            // Disable the button if the exercise is completed
+                            disabled={disabled}
+                        >
+                            Add command
+                        </button>
+                    )}
+                    {disabled && (
+                        <button
+                            className="text-white font-bold px-4 rounded h-9 bg-gray-500 hover:bg-gray-700"
+                            disabled={disabled}
+                        >
+                            Not available
+                        </button>
+                    )}
                 </div>
             </div>
         </>
