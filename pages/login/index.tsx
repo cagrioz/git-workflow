@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import LoginIllustration from "@app/assets/login_illustration.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Login() {
@@ -14,6 +14,12 @@ export default function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem("id") && localStorage.getItem("username")) {
+            window.location.href = "/";
+        }
+    }, []);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();

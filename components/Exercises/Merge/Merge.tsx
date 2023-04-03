@@ -1,6 +1,6 @@
 import { GitgraphOptions, templateExtend } from "@gitgraph/core";
 import { Gitgraph, Orientation, TemplateName } from "@gitgraph/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "react-simple-snackbar";
 
 const gitGraphOptions = {
@@ -40,7 +40,7 @@ function validateCommand(command: string) {
     return true;
 }
 
-function Merge({ active, updateScore }: { active: boolean; updateScore: any }) {
+function Merge({ active, updateScore, reset }: { active: boolean; updateScore: any; reset: boolean }) {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -61,6 +61,16 @@ function Merge({ active, updateScore }: { active: boolean; updateScore: any }) {
     const [executedCommands, setExecutedCommands] = useState<string[]>([]);
     const [command, setCommand] = useState<string>("");
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
+
+    // Reset state variables when the reset prop changes
+    useEffect(() => {
+        if (reset) {
+            setBranches([]);
+            setExecutedCommands([]);
+            setCommand("");
+            setExerciseCompleted(false);
+        }
+    }, [reset]);
 
     const disabled = !active || exerciseCompleted ? true : false;
 

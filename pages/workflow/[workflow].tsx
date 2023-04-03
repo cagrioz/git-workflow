@@ -24,16 +24,33 @@ export async function getServerSideProps({ params }: any) {
 
 const Workflow = ({ workflow, workflowName }: any) => {
     const [score, setScore] = useState(0);
+    const [reset, setReset] = useState(false);
 
     console.log(workflow);
+
+    const resetProgress = () => {
+        setScore(0);
+        setReset(!reset);
+    };
 
     return (
         <>
             <Header loggedIn={true} />
             <div className="container mx-auto">
-                <h1 className="text-5xl my-12 font-medium text-primary text-center">
-                    Workflow: {capitalize(workflowName)}
-                </h1>
+                <div className="flex justify-between items-center">
+                    <span className="text-3xl font-bold text-primaryLight">
+                        {score}/{workflow.score.total}
+                    </span>
+                    <h1 className="text-5xl my-12 font-medium text-primary text-center">
+                        Workflow: {capitalize(workflowName)}
+                    </h1>
+                    <span
+                        onClick={resetProgress}
+                        className="bg-primaryLight hover:bg-primary duration-200 transition-all py-3 px-5 text-white font-medium rounded-2xl cursor-pointer"
+                    >
+                        Reset Progress
+                    </span>
+                </div>
                 <div
                     className="text-xl mb-12 flex gap-5 flex-col"
                     dangerouslySetInnerHTML={{ __html: workflow.workflowDescription }}
@@ -50,13 +67,13 @@ const Workflow = ({ workflow, workflowName }: any) => {
                                             <p className="whitespace-pre-line mt-4 text-xl">{exercise.exerciseName}</p>
                                         </div>
                                         {exercise.exerciseId === 1 && (
-                                            <Commit active={index === score} updateScore={setScore} />
+                                            <Commit active={index === score} updateScore={setScore} reset={reset} />
                                         )}
                                         {exercise.exerciseId === 2 && (
-                                            <Branch active={index === score} updateScore={setScore} />
+                                            <Branch active={index === score} updateScore={setScore} reset={reset} />
                                         )}
                                         {exercise.exerciseId === 3 && (
-                                            <Merge active={index === score} updateScore={setScore} />
+                                            <Merge active={index === score} updateScore={setScore} reset={reset} />
                                         )}
                                     </div>
                                 );

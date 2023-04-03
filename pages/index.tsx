@@ -50,13 +50,13 @@ export default function Home() {
                                                 <p className="whitespace-pre-line mt-4">{exercise._description}</p>
                                             </div>
                                             {exercise._exerciseId === 1 && (
-                                                <Commit active={true} updateScore={function () {}} />
+                                                <Commit active={true} updateScore={function () {}} reset={true} />
                                             )}
                                             {exercise._exerciseId === 2 && (
-                                                <Branch active={true} updateScore={function () {}} />
+                                                <Branch active={true} updateScore={function () {}} reset={true} />
                                             )}
                                             {exercise._exerciseId === 3 && (
-                                                <Merge active={true} updateScore={function () {}} />
+                                                <Merge active={true} updateScore={function () {}} reset={true} />
                                             )}
                                         </div>
                                     );
