@@ -21,6 +21,8 @@ export default function Home() {
         if (userId && username) {
             console.log("User is logged in");
             setLoggedIn(true);
+        } else {
+            window.location.href = "/login";
         }
 
         fetch("http://localhost:8000/exercises")

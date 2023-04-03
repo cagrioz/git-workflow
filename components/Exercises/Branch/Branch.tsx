@@ -88,6 +88,7 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
         if (message[0] == "git checkout " || (message2 && message2[1].length > 0)) {
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
+            updateScore((prevScore: number) => prevScore + 1);
         } else {
             openErrorSnackbar("Command not correct");
             return;
