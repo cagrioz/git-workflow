@@ -7,12 +7,14 @@ import SnackbarProvider from "react-simple-snackbar";
 import { capitalize } from "lodash";
 import Header from "@app/components/Header";
 import Footer from "@app/components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
     const res = await axios.get(`http://localhost:8000/workflows/course?workflowName=${workflow}&userId=1`);
     const data = await res.data;
+
+    console.log(data);
 
     return {
         props: {
@@ -25,12 +27,33 @@ export async function getServerSideProps({ params }: any) {
 const Workflow = ({ workflow, workflowName }: any) => {
     const [score, setScore] = useState(0);
 
-    console.log(workflow);
+    useEffect(() => {
+        setScore(workflow.score.completed);
+    }, []);
+
+    // Update score
+    useEffect(() => {
+        axios
+            .post("http://localhost:8000/workflows", {
+                userId: 1,
+                workflowName: workflowName,
+                score: score,
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [score]);
 
     return (
         <>
             <Header loggedIn={true} />
-            <div className="container mx-auto">
+            <div className="container mx-auto relative">
+                <span className="absolute top-0 left-0 text-3xl font-bold text-primaryLight">
+                    {score}/{workflow.score.total}
+                </span>
                 <h1 className="text-5xl my-12 font-medium text-primary text-center">
                     Workflow: {capitalize(workflowName)}
                 </h1>
