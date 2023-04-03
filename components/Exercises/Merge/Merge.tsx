@@ -75,6 +75,7 @@ function Merge({ active, updateScore }: { active: boolean; updateScore: any }) {
         if (command == "git merge master") {
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
+            updateScore((prevScore: number) => prevScore + 1);
         } else {
             openErrorSnackbar("Command not correct");
             return;
