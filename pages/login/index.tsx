@@ -17,11 +17,13 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
+    /*
     useEffect(() => {
         if (localStorage.getItem("id") && localStorage.getItem("username")) {
             window.location.href = "/";
         }
     }, []);
+    */
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -36,12 +38,15 @@ export default function Login() {
                     setError("");
 
                     if (res.data.id && res.data.username) {
-                        localStorage.setItem("id", res.data.id);
-                        localStorage.setItem("username", res.data.username);
+                        const { id, username, accessToken } = res.data;
+                        // Store the res.data.id, res.data.username, res.data.accessToken in httpOnly cookie
+                        localStorage.setItem("id", id);
+                        localStorage.setItem("username", username);
+                        localStorage.setItem("accessToken", accessToken);
+
                         // Route to home directory and add userId=res.data.id to the context
                         router.push({
                             pathname: "/",
-                            query: { userId: res.data.id },
                         });
                     }
 

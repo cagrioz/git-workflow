@@ -15,7 +15,6 @@ export async function getServerSideProps() {
 }
 
 const Exercises = ({ exercises }: any) => {
-    console.log(exercises);
     return (
         <>
             <Header loggedIn={true} />

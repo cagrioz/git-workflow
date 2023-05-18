@@ -29,11 +29,18 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                                     Profile
                                 </Link>
                                 <Link
+                                    href="/create-workflow"
+                                    className="py-2 px-3 font-medium bg-white rounded-xl text-primary"
+                                >
+                                    Create Workflow
+                                </Link>
+                                <Link
                                     href="#"
                                     className="py-2 px-3 font-medium ml-4"
                                     onClick={() => {
                                         localStorage.removeItem("id");
                                         localStorage.removeItem("username");
+                                        localStorage.removeItem("accessToken");
                                         window.location.href = "/login";
                                     }}
                                 >
