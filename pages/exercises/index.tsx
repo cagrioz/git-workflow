@@ -1,20 +1,34 @@
 import Footer from "@app/components/Footer";
 import Header from "@app/components/Header";
+import { useAuth } from "@app/contexts/AuthContext";
 import axios from "axios";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export async function getServerSideProps() {
-    const res = await axios.get(`http://localhost:8000/exercises`);
-    const data = await res.data;
+const Exercises = () => {
+    const [exercises, setExercises] = useState([]);
+    const auth = useAuth();
 
-    return {
-        props: {
-            exercises: data,
-        },
-    };
-}
+    useEffect(() => {
+        const fetchExercises = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${auth.accessToken}`,
+                    },
+                    withCredentials: true,
+                };
 
-const Exercises = ({ exercises }: any) => {
+                const res = await axios.get("http://localhost:8000/exercises", config);
+                setExercises(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchExercises();
+    }, []);
+
     return (
         <>
             <Header loggedIn={true} />
