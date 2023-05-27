@@ -199,7 +199,8 @@ describe("<Header />", () => {
 
         // Verify that the home link navigates to the correct page
 
-        expect(window.location.href).toBe("http://localhost/");
+        // expect(window.location.href).toBe("http://localhost/");
+        expect(window.location.href).toBe("/home");
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // Should we change this to "/home" or not ?
     });
