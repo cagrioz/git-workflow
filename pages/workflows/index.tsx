@@ -4,29 +4,31 @@ import axios from "axios";
 import Link from "next/link";
 
 import { capitalize } from "lodash";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "@app/contexts/AuthContext";
 
-export async function getServerSideProps() {
-    const res = await axios.get(`http://localhost:8000/workflows`);
-    const data = await res.data;
-
-    return {
-        props: {
-            workflows: data,
-        },
-    };
-}
-
-const Workflows = ({ workflows }: any) => {
-    const router = useRouter();
+const Workflows = () => {
+    const [workflows, setWorkflows] = useState([]);
+    const auth = useAuth();
 
     useEffect(() => {
-        // get user id
-        const userId = localStorage.getItem("id");
-        router.push({
-            query: { userId },
-        });
+        const fetchExercises = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${auth.accessToken}`,
+                    },
+                    withCredentials: true,
+                };
+
+                const res = await axios.get("http://localhost:8000/workflows", config);
+                setWorkflows(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchExercises();
     }, []);
 
     return (

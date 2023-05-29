@@ -8,7 +8,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
+import { useAuth } from "@app/contexts/AuthContext";
+
 export default function Login() {
+    const { setAccessToken, setUserId } = useAuth();
+
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -43,6 +47,9 @@ export default function Login() {
                         localStorage.setItem("id", id);
                         localStorage.setItem("username", username);
                         localStorage.setItem("accessToken", accessToken);
+
+                        setAccessToken(accessToken);
+                        setUserId(id);
 
                         // Route to home directory and add userId=res.data.id to the context
                         router.push({

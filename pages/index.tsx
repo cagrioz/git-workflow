@@ -76,7 +76,6 @@ export default function Home() {
                                         collaborate on code and make your changes available to others in the team.
                                     </p>
                                 </div>
-                                <CommitMerge />
                             </div>
                         </div>
                     </div>

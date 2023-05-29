@@ -89,7 +89,7 @@ function Commit({ active, updateScore, reset }: { active: boolean; updateScore: 
             // Snackbar green background
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
-            updateScore((prevScore: number) => prevScore + 1);
+            updateScore();
         } else {
             openErrorSnackbar("Command not correct");
             return;
