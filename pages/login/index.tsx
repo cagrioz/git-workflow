@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@app/contexts/AuthContext";
 
 export default function Login() {
-    const { setAccessToken } = useAuth();
+    const { setAccessToken, setUserId } = useAuth();
 
     const router = useRouter();
     const [username, setUsername] = useState("");
@@ -49,6 +49,7 @@ export default function Login() {
                         localStorage.setItem("accessToken", accessToken);
 
                         setAccessToken(accessToken);
+                        setUserId(id);
 
                         // Route to home directory and add userId=res.data.id to the context
                         router.push({

@@ -16,6 +16,7 @@ const gitGraphOptions = {
 };
 
 const supportedCommands = ["commit", "checkout", "merge", "branch"];
+const supportedGraphCommands = ["add", "pull"];
 
 // Git command validation
 function validateCommand(command: string) {
@@ -33,14 +34,14 @@ function validateCommand(command: string) {
     }
 
     // Check if the second word is a command
-    if (!supportedCommands.includes(message[1])) {
+    if (!supportedCommands.includes(message[1]) && !supportedGraphCommands.includes(message[1])) {
         return false;
     }
 
     return true;
 }
 
-function Branch({ active, updateScore, reset }: { active: boolean; updateScore: any; reset: boolean }) {
+function CreateDeleteBranch({ active, updateScore, reset }: { active: boolean; updateScore: any; reset: boolean }) {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -61,6 +62,8 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
     const [executedCommands, setExecutedCommands] = useState<string[]>([]);
     const [command, setCommand] = useState<string>("");
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
+    const [currentStep, setCurrentStep] = useState<number>(0);
+    const [branchName, setBranchName] = useState<string>("");
 
     // Reset state variables when the reset prop changes
     useEffect(() => {
@@ -81,20 +84,42 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
             return;
         }
 
-        // Check if the command is correct
-        const message = command.split("-b");
-        const message2 = command.split("git branch ");
+        if (currentStep === 0) {
+            // Check if the command is correct
+            const message = command.split("-b");
+            const message2 = command.split("git branch ");
 
-        if (message[0] == "git checkout " || (message2 && message2[1].length > 0)) {
+            if (message[0] == "git checkout " || (message2 && message2[1]?.length > 0)) {
+                if (command.includes("-b")) {
+                    let branchName = command.split("-b")[1].trim();
+                    setBranchName(branchName);
+                } else {
+                    let branchName = command.split("git branch ")[1].trim();
+                    setBranchName(branchName);
+                }
+
+                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            } else {
+                openErrorSnackbar("Command not correct");
+                return;
+            }
+        } else if (currentStep === 1) {
+            const message = command.split("git branch -d ");
+
+            if (!message[1] || message[1] !== branchName) {
+                console.log(message[1], branchName);
+                openErrorSnackbar("Command not correct");
+                return;
+            }
+
             openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             setExerciseCompleted(true);
             updateScore();
-        } else {
-            openErrorSnackbar("Command not correct");
-            return;
         }
 
         setExecutedCommands([...executedCommands, command]);
+
+        setCurrentStep((prevStep) => prevStep + 1);
 
         // Add the command to the status
         setCommand("");
@@ -108,31 +133,31 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
                     setBranches([master]);
                     master.commit("Initial commit");
 
-                    master.branch("feature-1").commit("Feature 1 commit");
+                    master.commit("Add index.html");
+
+                    let newBranch: any;
 
                     executedCommands.forEach((command) => {
                         const message = command.split(" ");
 
-                        if (message[1] === "commit") {
-                            // Commit to the current branch that is active
-                            master.commit(message[2]);
-                        } else if (
-                            (message[1] === "checkout" && message[2] === "-b") ||
-                            (message[1] === "branch" && message[2].length > 0)
-                        ) {
-                            const newBranch = master.branch(message[3] || message[2]).commit("New branch");
-
-                            // Add the new branch to the list of branches if it doesn't exist
-                            if (!branches.find((branch) => branch.name === newBranch.name)) {
+                        if (message[1] === "checkout") {
+                            if (message[2] === "-b") {
+                                newBranch = master.branch(message[3]).commit("new branch");
                                 setBranches([...branches, newBranch]);
                             }
-                        } else if (message[1] === "checkout") {
-                            const branch = branches.find((branch) => branch.name === message[2]);
-                            if (branch) {
-                                console.log(branch);
-                                branch.checkout().commit("Checkout branch");
+                        } else if (message[1] === "branch") {
+                            if (message[2] === "-d") {
+                                master.checkout();
+
+                                if (newBranch === message[3]) {
+                                    newBranch.delete();
+
+                                    setBranches(branches.filter((branch) => branch.name !== newBranch.name));
+                                }
+                            } else {
+                                newBranch = master.branch(message[2]).commit("new branch");
+                                setBranches([...branches, newBranch]);
                             }
-                        } else if (message[1] === "merge") {
                         }
                     });
                 }}
@@ -141,7 +166,10 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
                 {exerciseCompleted && (
                     <div className="bg-green-500 text-white font-bold rounded-t px-4 py-2">
                         <p>Exercise completed</p>
-                        <p>Answer: {executedCommands[0]}</p>
+                        <p>Answer:</p>
+                        {executedCommands.map((el, i) => (
+                            <p key={i}>{el}</p>
+                        ))}
                     </div>
                 )}
                 <div
@@ -190,4 +218,4 @@ function Branch({ active, updateScore, reset }: { active: boolean; updateScore: 
         </>
     );
 }
-export default Branch;
+export default CreateDeleteBranch;

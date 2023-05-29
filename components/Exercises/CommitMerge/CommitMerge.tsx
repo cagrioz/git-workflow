@@ -1,6 +1,6 @@
 import { GitgraphOptions, templateExtend } from "@gitgraph/core";
 import { Gitgraph, Orientation, TemplateName } from "@gitgraph/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "react-simple-snackbar";
 
 const gitGraphOptions = {
@@ -40,7 +40,7 @@ function validateCommand(command: string) {
     return true;
 }
 
-function CommitMerge() {
+function CommitMerge({ active, updateScore, reset }: { active: boolean; updateScore: any; reset: boolean }) {
     // Success snackbar
     const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
         style: {
@@ -63,6 +63,18 @@ function CommitMerge() {
     const [exerciseCompleted, setExerciseCompleted] = useState<boolean>(false);
     const [currentStep, setCurrentStep] = useState<number>(0);
 
+    // Reset state variables when the reset prop changes
+    useEffect(() => {
+        if (reset) {
+            setBranches([]);
+            setExecutedCommands([]);
+            setCommand("");
+            setExerciseCompleted(false);
+        }
+    }, [reset]);
+
+    const disabled = !active || exerciseCompleted ? true : false;
+
     function addCommand() {
         // Check if the command is valid
         if (!validateCommand(command)) {
@@ -75,7 +87,7 @@ function CommitMerge() {
             const message = command.split("-b");
             const message2 = command.split("git branch ");
 
-            if (message[0] == "git checkout " || (message2 && message2[1].length > 0)) {
+            if (message[0] == "git checkout " || (message2 && message2[1]?.length > 0)) {
                 openSuccessSnackbar("Correct command! You can now continue to the next exercise");
             } else {
                 openErrorSnackbar("Command not correct");
@@ -97,6 +109,7 @@ function CommitMerge() {
             if (command == "git merge master") {
                 openSuccessSnackbar("Correct command! You can now continue to the next exercise");
                 setExerciseCompleted(true);
+                updateScore();
             } else {
                 openErrorSnackbar("Command not correct");
                 return;
@@ -181,16 +194,26 @@ function CommitMerge() {
                         // Disable the input if the exercise is completed
                         disabled={exerciseCompleted}
                     />
-                    <button
-                        className={` text-white font-bold px-4 rounded h-9 ${
-                            exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
-                        }}`}
-                        onClick={addCommand}
-                        // Disable the button if the exercise is completed
-                        disabled={exerciseCompleted}
-                    >
-                        Add command
-                    </button>
+                    {!disabled && (
+                        <button
+                            className={`text-white font-bold px-4 rounded h-9 ${
+                                exerciseCompleted ? "bg-green-700 hover:bg-green-700" : "bg-blue-500 hover:bg-blue-700"
+                            }`}
+                            onClick={addCommand}
+                            // Disable the button if the exercise is completed
+                            disabled={disabled}
+                        >
+                            Add command
+                        </button>
+                    )}
+                    {disabled && (
+                        <button
+                            className="text-white font-bold px-4 rounded h-9 bg-gray-500 hover:bg-gray-700"
+                            disabled={disabled}
+                        >
+                            Not available
+                        </button>
+                    )}
                 </div>
             </div>
         </>
