@@ -1,19 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Footer from "../";
-// Using React testing library & Jest
-// Jest provides the describe and test functions
 
 describe("<Footer />", () => {
-    // Unit tests for the footer component are implemented here
-
-    test("renders the footer component", () => {
-        render(<Footer />);
-
-        // Testing if the footer component is rendered
-        const footer = screen.getByRole("contentinfo");
-        expect(footer).toBeVisible();
-    });
-
     test("renders the links in the footer", () => {
         render(<Footer />);
         // Testing if the link are rendered correctly

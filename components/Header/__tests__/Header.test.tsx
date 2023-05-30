@@ -1,7 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "../";
-// Using React testing library & Jest
-// Jest provides the describe and test functions
 
 describe("<Header />", () => {
     // Unit tests for the header component are implemented here
@@ -118,12 +116,7 @@ describe("<Header />", () => {
         expect(localStorage.getItem("accessToken")).toBeNull();
     });
 
-    test("display the 'Create Workflow' link only when the user is logged in", () => {
-        // Didn't work!!!
-        // render(<Header loggedIn={false} />);
-        // const createWorkflowLink = screen.queryByText("Create Workflow");
-        // expect(createWorkflowLink).toBeNull();
-
+    test("display the 'Create Workflow' link when the user is logged in", () => {
         render(<Header loggedIn={true} />);
         const createWorkflowLinkLoggedIn = screen.getByText("Create Workflow");
         expect(createWorkflowLinkLoggedIn).toBeVisible();
@@ -141,55 +134,55 @@ describe("<Header />", () => {
         expect(logoutEventHandler).toHaveBeenCalledTimes(1);
     });
 
-    // test("testing when the login link is clicked (user not logged in)", () => {
-    //     render(<Header loggedIn={false} />);
-    //     const loginLink = screen.getByText("Login");
+    test("testing when the login link is clicked (user not logged in)", () => {
+        render(<Header loggedIn={false} />);
+        const loginLink = screen.getByText("Login");
 
-    //     fireEvent.click(loginLink);
+        fireEvent.click(loginLink);
 
-    //     // Expecting the login link to direct to the correct page
-    //     expect(window.location.href).toBe("/login");
-    //   });
+        // Expecting the login link to direct to the correct page
+        expect(window.location.href).toBe("/login");
+    });
 
-    // test("testing when the create workflow link is clicked (user logged in)", () => {
-    //     render(<Header loggedIn={true} />);
-    //     const createWorkflowLink = screen.getByText("Create Workflow");
+    test("testing when the create workflow link is clicked (user logged in)", () => {
+        render(<Header loggedIn={true} />);
+        const createWorkflowLink = screen.getByText("Create Workflow");
 
-    //     fireEvent.click(createWorkflowLink);
+        fireEvent.click(createWorkflowLink);
 
-    //    // Expecting the create workflow link to direct to the create-workflow
-    //     expect(window.location.href).toBe("/create-workflow");
-    //   });
+        // Expecting the create workflow link to direct to the create-workflow
+        expect(window.location.href).toBe("/create-workflow");
+    });
 
-    // test("testing when the profile link is clicked (user logged in)", () => {
-    //     render(<Header loggedIn={true} />);
-    //     const profileLink = screen.getByText("Profile");
+    test("testing when the profile link is clicked (user logged in)", () => {
+        render(<Header loggedIn={true} />);
+        const profileLink = screen.getByText("Profile");
 
-    //     fireEvent.click(profileLink);
+        fireEvent.click(profileLink);
 
-    //     // Verify that the profile link navigates to the correct page
-    //     expect(window.location.href).toBe("/profile");
-    //   });
+        // Verify that the profile link navigates to the correct page
+        expect(window.location.href).toBe("/profile");
+    });
 
-    // test("testing when the exercises link is clicked (user logged in)", () => {
-    //     render(<Header loggedIn={true} />);
-    //     const exercisesLink = screen.getByText("Exercises");
+    test("testing when the exercises link is clicked (user logged in)", () => {
+        render(<Header loggedIn={true} />);
+        const exercisesLink = screen.getByText("Exercises");
 
-    //     fireEvent.click(exercisesLink);
+        fireEvent.click(exercisesLink);
 
-    //     // Verify that the exercises link navigates to the correct page
-    //     expect(window.location.href).toBe("/exercises");
-    //   });
+        // Verify that the exercises link navigates to the correct page
+        expect(window.location.href).toBe("/exercises");
+    });
 
-    // test("testing when the workflows link is clicked (user logged in)", () => {
-    //     render(<Header loggedIn={true} />);
-    //     const workflowsLink = screen.getByText("Workflows");
+    test("testing when the workflows link is clicked (user logged in)", () => {
+        render(<Header loggedIn={true} />);
+        const workflowsLink = screen.getByText("Workflows");
 
-    //     fireEvent.click(workflowsLink);
+        fireEvent.click(workflowsLink);
 
-    //     // Verify that the workflows link navigates to the correct page
-    //     expect(window.location.href).toBe("/workflows");
-    //   });
+        // Verify that the workflows link navigates to the correct page
+        expect(window.location.href).toBe("/workflows");
+    });
 
     test("testing when the home link is clicked (user logged in)", () => {
         render(<Header loggedIn={true} />);
@@ -197,11 +190,7 @@ describe("<Header />", () => {
 
         fireEvent.click(homeLink);
 
-        // Verify that the home link navigates to the correct page
-
-        // expect(window.location.href).toBe("http://localhost/");
-        expect(window.location.href).toBe("/home");
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // Should we change this to "/home" or not ?
+        // Verifies that the home link navigates to the correct page
+        expect(window.location.pathname).toBe("/"); // The home page URL is the root path
     });
 });
