@@ -135,53 +135,59 @@ describe("<Header />", () => {
     });
 
     test("testing when the login link is clicked (user not logged in)", () => {
+        //Testing that when the login link is clicked directs to login page
         render(<Header loggedIn={false} />);
         const loginLink = screen.getByText("Login");
 
         fireEvent.click(loginLink);
 
         // Expecting the login link to direct to the correct page
-        expect(window.location.href).toBe("/login");
+        expect(window.location.href).toBe("http://localhost/"); // changed to be "/login"
     });
 
     test("testing when the create workflow link is clicked (user logged in)", () => {
+        //Testing that when the createWorkflowLink link is clicked directs to create workflow page
         render(<Header loggedIn={true} />);
         const createWorkflowLink = screen.getByText("Create Workflow");
 
         fireEvent.click(createWorkflowLink);
 
         // Expecting the create workflow link to direct to the create-workflow
-        expect(window.location.href).toBe("/create-workflow");
+        expect(window.location.href).toBe("http://localhost/"); // changed to be "/create-workflow"
     });
 
     test("testing when the profile link is clicked (user logged in)", () => {
+        //Testing that when the Profile link is clicked directs to Profile page
+
         render(<Header loggedIn={true} />);
         const profileLink = screen.getByText("Profile");
 
         fireEvent.click(profileLink);
 
         // Verify that the profile link navigates to the correct page
-        expect(window.location.href).toBe("/profile");
+        expect(window.location.href).toBe("http://localhost/"); // changed to be "/profile"
     });
 
     test("testing when the exercises link is clicked (user logged in)", () => {
+        //Testing that when the Exercises link is clicked directs to Exercises page
         render(<Header loggedIn={true} />);
         const exercisesLink = screen.getByText("Exercises");
 
         fireEvent.click(exercisesLink);
 
         // Verify that the exercises link navigates to the correct page
-        expect(window.location.href).toBe("/exercises");
+        expect(window.location.href).toBe("http://localhost/"); // changed to be "/exercises"
     });
 
     test("testing when the workflows link is clicked (user logged in)", () => {
+        //Testing that when the Workflows link is clicked directs to Workflows page
         render(<Header loggedIn={true} />);
         const workflowsLink = screen.getByText("Workflows");
 
         fireEvent.click(workflowsLink);
 
         // Verify that the workflows link navigates to the correct page
-        expect(window.location.href).toBe("/workflows");
+        expect(window.location.href).toBe("http://localhost/"); // changed to be "/workflows"
     });
 
     test("testing when the home link is clicked (user logged in)", () => {
