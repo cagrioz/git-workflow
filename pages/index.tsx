@@ -25,7 +25,7 @@ export default function Home() {
             window.location.href = "/login";
         }
 
-        fetch("http://localhost:8000/exercises")
+        fetch("http://https://git-workflow-backend.onrender.com/exercises")
             .then((res) => res.json())
             .then((data) => setExercises(data));
     }, []);

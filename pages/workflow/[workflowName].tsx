@@ -18,7 +18,8 @@ import CreateDeleteBranch from "@app/components/Exercises/CreateDeleteBranch/Cre
 /*
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
-    const res = await axios.get(`http://localhost:8000/workflows/course?workflowName=${workflow}&userId=1`);
+    const res = await axios.get(`http://https://git-workflow-backend.onrender.com/
+workflows/course?workflowName=${workflow}&userId=1`);
     const data = await res.data;
 
     return {
@@ -55,7 +56,7 @@ const Workflow = () => {
                     };
 
                     const res = await axios.get(
-                        `http://localhost:8000/workflows/course?workflowName=${workflowName}&userId=${auth.userId}`,
+                        `http://https://git-workflow-backend.onrender.com/workflows/course?workflowName=${workflowName}&userId=${auth.userId}`,
                         config
                     );
                     setWorkflowDetails(res.data);
@@ -76,7 +77,7 @@ const Workflow = () => {
     function updateScore(score: number) {
         axios
             .post(
-                "http://localhost:8000/workflows/",
+                "http://https://git-workflow-backend.onrender.com/workflows/",
                 {
                     userId: auth.userId,
                     workflowName: workflowName,

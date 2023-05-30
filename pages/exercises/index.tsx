@@ -19,7 +19,7 @@ const Exercises = () => {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("http://localhost:8000/exercises", config);
+                const res = await axios.get("http://https://git-workflow-backend.onrender.com/exercises", config);
                 setExercises(res.data);
             } catch (error) {
                 console.log(error);

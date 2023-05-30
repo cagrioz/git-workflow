@@ -36,7 +36,13 @@ export default function Register() {
         setError("");
 
         axios
-            .post("http://localhost:8000/register", { username, password, email, firstName, lastName })
+            .post("http://https://git-workflow-backend.onrender.com/register", {
+                username,
+                password,
+                email,
+                firstName,
+                lastName,
+            })
             .then((res) => {
                 console.log(res);
             })

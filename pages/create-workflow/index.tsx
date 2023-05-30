@@ -12,7 +12,7 @@ const CreateWorkflow = () => {
 
     useEffect(() => {
         const fetchExercises = async () => {
-            const res = await axios.get("http://localhost:8000/exercises", {
+            const res = await axios.get("http://https://git-workflow-backend.onrender.com/exercises", {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
@@ -45,7 +45,7 @@ const CreateWorkflow = () => {
         }
 
         axios
-            .post(`http://localhost:8000/custom`, {
+            .post(`http://https://git-workflow-backend.onrender.com/custom`, {
                 userId: 4,
                 workflowName: e.target[0].value,
                 description: e.target[1].value,
