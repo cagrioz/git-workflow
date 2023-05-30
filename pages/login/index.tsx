@@ -33,7 +33,7 @@ export default function Login() {
         e.preventDefault();
 
         axios
-            .post("http://https://git-workflow-backend.onrender.com/login", { username, password })
+            .post("https://git-workflow-backend.onrender.com/login", { username, password })
             .then((res) => {
                 setLoading(false);
 
