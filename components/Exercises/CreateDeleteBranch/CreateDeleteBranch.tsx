@@ -149,7 +149,7 @@ function CreateDeleteBranch({ active, updateScore, reset }: { active: boolean; u
                             if (message[2] === "-d") {
                                 master.checkout();
 
-                                if (newBranch === message[3]) {
+                                if (newBranch.name === message[3]) {
                                     newBranch.delete();
 
                                     setBranches(branches.filter((branch) => branch.name !== newBranch.name));
