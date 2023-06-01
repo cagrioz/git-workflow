@@ -148,7 +148,7 @@ const Workflow = () => {
                                             </div>
                                             {exercise.exerciseId === 1 && (
                                                 <CloneRepo
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -215,7 +215,7 @@ const Workflow = () => {
 
                                             {exercise.exerciseId === 9 && (
                                                 <StageAndCommitSpecificFile
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -225,7 +225,7 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 10 && (
                                                 <PullCommitPush
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -235,7 +235,7 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 11 && (
                                                 <PullCommitPushTag
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
