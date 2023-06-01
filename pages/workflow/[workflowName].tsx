@@ -14,6 +14,10 @@ import CommitMerge from "@app/components/Exercises/CommitMerge/CommitMerge";
 import StageAndCommit from "@app/components/Exercises/StageAndCommit/StageAndCommit";
 import PullBranchStageCommitMerge from "@app/components/Exercises/PullBranchStageCommitMerge/PullBranchStageCommitMerge";
 import CreateDeleteBranch from "@app/components/Exercises/CreateDeleteBranch/CreateDeleteBranch";
+import PullCommitPush from "@app/components/Exercises/PullCommitPush/PullCommitPush";
+import StageAndCommitSpecificFile from "@app/components/Exercises/StageAndCommitSpecificFile/StageAndCommitSpecificFile";
+import CloneRepo from "@app/components/Exercises/CloneRepo/CloneRepo";
+import PullCommitPushTag from "@app/components/Exercises/PullStageCommitPushTag/PullStageCommitPushTag";
 
 /*
 export async function getServerSideProps({ params }: any) {
@@ -171,14 +175,70 @@ const Workflow = () => {
                                                     reset={reset}
                                                 />
                                             )}
+                                            {exercise.exerciseId === 4 && (
+                                                <CommitMerge
+                                                    active={index === score}
+                                                    updateScore={updateScore}
+                                                    reset={reset}
+                                                />
+                                            )}
+                                            {exercise.exerciseId === 5 && (
+                                                <StageAndCommit
+                                                    active={index === score}
+                                                    updateScore={updateScore}
+                                                    reset={reset}
+                                                />
+                                            )}
+                                            {exercise.exerciseId === 6 && (
+                                                <PullBranchStageCommitMerge
+                                                    active={index === score}
+                                                    updateScore={updateScore}
+                                                    reset={reset}
+                                                />
+                                            )}
+                                            {exercise.exerciseId === 7 && (
+                                                <CreateDeleteBranch
+                                                    active={index === score}
+                                                    updateScore={updateScore}
+                                                    reset={reset}
+                                                />
+                                            )}
                                         </div>
                                     );
                                 })}
-                            <CommitMerge active={true} updateScore={updateScore} reset={reset} />
-                            <StageAndCommit active={true} updateScore={updateScore} reset={reset} />
-                            <PullBranchStageCommitMerge active={true} updateScore={updateScore} reset={reset} />
-                            <CreateDeleteBranch active={true} updateScore={updateScore} reset={reset} />
                         </div>
+                        <PullCommitPush
+                            active={true}
+                            updateScore={() => {
+                                setScore((prevScore: number) => prevScore + 1);
+                                updateScore(score);
+                            }}
+                            reset={reset}
+                        />
+                        <StageAndCommitSpecificFile
+                            active={true}
+                            updateScore={() => {
+                                setScore((prevScore: number) => prevScore + 1);
+                                updateScore(score);
+                            }}
+                            reset={reset}
+                        />
+                        <CloneRepo
+                            active={true}
+                            updateScore={() => {
+                                setScore((prevScore: number) => prevScore + 1);
+                                updateScore(score);
+                            }}
+                            reset={reset}
+                        />
+                        <PullCommitPushTag
+                            active={true}
+                            updateScore={() => {
+                                setScore((prevScore: number) => prevScore + 1);
+                                updateScore(score);
+                            }}
+                            reset={reset}
+                        />
                     </SnackbarProvider>
                 </div>
             )}
