@@ -6,29 +6,33 @@ import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
 import Merge from "../components/Exercises/Merge";
 import { useEffect, useState } from "react";
-import CommitMerge from "@app/components/Exercises/CommitMerge";
+import axios from "axios";
+import { useAuth } from "@app/contexts/AuthContext";
+import { access } from "fs";
 
 export default function Home() {
+    const auth = useAuth();
     const [exercises, setExercises] = useState<any[]>([]);
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
-    // Fetch exercises from API
     useEffect(() => {
-        // Fetch localStorage id and username
-        const userId = localStorage.getItem("id");
-        const username = localStorage.getItem("username");
+        const fetchExercises = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${auth?.accessToken}`,
+                    },
+                    withCredentials: true,
+                };
 
-        if (userId && username) {
-            console.log("User is logged in");
-            setLoggedIn(true);
-        } else {
-            window.location.href = "/login";
-        }
+                const res = await axios.get("https://git-workflow-backend.onrender.com", config);
+                setExercises(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-        fetch("https://git-workflow-backend.onrender.com/exercises")
-            .then((res) => res.json())
-            .then((data) => setExercises(data));
-    }, []);
+        fetchExercises();
+    }, [auth?.accessToken]);
 
     return (
         <div>
@@ -38,45 +42,31 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="min-h-screen">
-                <Header loggedIn={loggedIn} />
+                <Header loggedIn={auth?.accessToken ? true : false} />
 
                 <SnackbarProvider>
                     <div className="container mx-auto">
                         <div className="flex flex-col gap-10">
                             {exercises.length > 0 &&
-                                exercises.map((exercise) => {
+                                exercises.map((exercise, i) => {
                                     return (
-                                        <div className="flex flex-col gap-5" key={exercise._exerciseName}>
+                                        <div className="flex flex-col gap-5" key={i}>
                                             <div className="flex flex-col gap-2">
-                                                <h2 className="text-4xl font-bold">{exercise._exerciseName}</h2>
-                                                <p className="whitespace-pre-line mt-4">{exercise._description}</p>
+                                                <h2 className="text-4xl font-bold">{exercise.exerciseName}</h2>
+                                                <p className="whitespace-pre-line mt-4">{exercise.description}</p>
                                             </div>
-                                            {exercise._exerciseId === 1 && (
+                                            {exercise.exerciseId === 1 && (
                                                 <Commit active={true} updateScore={function () {}} reset={true} />
                                             )}
-                                            {exercise._exerciseId === 2 && (
+                                            {exercise.exerciseId === 2 && (
                                                 <Branch active={true} updateScore={function () {}} reset={true} />
                                             )}
-                                            {exercise._exerciseId === 3 && (
+                                            {exercise.exerciseId === 3 && (
                                                 <Merge active={true} updateScore={function () {}} reset={true} />
                                             )}
                                         </div>
                                     );
                                 })}
-                            <div className="flex flex-col gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <h2 className="text-4xl font-bold">
-                                        Create a new branch and make 1 commit and merge
-                                    </h2>
-                                    <p className="whitespace-pre-line mt-4 max-w-5xl">
-                                        Learn the process of creating a new feature branch in a Git repository, making
-                                        one commit to it, and then using the git merge command to incorporate those
-                                        changes into the master branch. This exercise will cover the basic workflow of
-                                        branching, committing, and merging changes in Git, allowing you to effectively
-                                        collaborate on code and make your changes available to others in the team.
-                                    </p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </SnackbarProvider>
