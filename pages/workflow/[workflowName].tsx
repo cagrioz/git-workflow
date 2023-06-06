@@ -64,7 +64,8 @@ const Workflow = () => {
                         config
                     );
                     setWorkflowDetails(res.data);
-                    setScore(res.data.score.completed || 0);
+                    setScore(res.data.score.completed);
+                    console.log("useeffect score", score);
 
                     setIsLoading(false);
                 }
@@ -75,8 +76,6 @@ const Workflow = () => {
 
         fetchWorkflowDetails();
     }, [workflowName, score]);
-
-    // Update score
 
     function updateScore(score: number) {
         axios
@@ -104,8 +103,8 @@ const Workflow = () => {
 
     const resetProgress = () => {
         setScore(0);
-        setReset(!reset);
         updateScore(-1);
+        setReset(!reset);
     };
 
     return (
@@ -148,7 +147,7 @@ const Workflow = () => {
                                             </div>
                                             {exercise.exerciseId === 1 && (
                                                 <CloneRepo
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -159,7 +158,7 @@ const Workflow = () => {
 
                                             {exercise.exerciseId === 2 && (
                                                 <Branch
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -169,7 +168,7 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 3 && (
                                                 <Commit
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -178,32 +177,59 @@ const Workflow = () => {
                                                 />
                                             )}
                                             {exercise.exerciseId === 4 && (
-                                                <Merge active={true} updateScore={updateScore} reset={reset} />
+                                                <Merge
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
                                             )}
                                             {exercise.exerciseId === 5 && (
-                                                <CommitMerge active={true} updateScore={updateScore} reset={reset} />
+                                                <CommitMerge
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
                                             )}
                                             {exercise.exerciseId === 6 && (
-                                                <StageAndCommit active={true} updateScore={updateScore} reset={reset} />
+                                                <StageAndCommit
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
                                             )}
                                             {exercise.exerciseId === 7 && (
                                                 <PullBranchStageCommitMerge
-                                                    active={true}
-                                                    updateScore={updateScore}
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
                                                     reset={reset}
                                                 />
                                             )}
                                             {exercise.exerciseId === 8 && (
                                                 <CreateDeleteBranch
-                                                    active={true}
-                                                    updateScore={updateScore}
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
                                                     reset={reset}
                                                 />
                                             )}
 
                                             {exercise.exerciseId === 9 && (
                                                 <StageAndCommitSpecificFile
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -213,7 +239,7 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 10 && (
                                                 <PullCommitPush
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);
@@ -223,7 +249,7 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 11 && (
                                                 <PullCommitPushTag
-                                                    active={true}
+                                                    active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
                                                         updateScore(score);

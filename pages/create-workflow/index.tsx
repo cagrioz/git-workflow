@@ -1,37 +1,35 @@
 import Footer from "@app/components/Footer";
 import Header from "@app/components/Header";
 import axios from "axios";
-import Link from "next/link";
 
 import { capitalize } from "lodash";
 import { useEffect, useState } from "react";
+import { useAuth } from "@app/contexts/AuthContext";
 
 const CreateWorkflow = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [exercises, setExercises] = useState<any>([]);
+
+    const auth = useAuth();
 
     useEffect(() => {
         const fetchExercises = async () => {
-            const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-            });
-            setExercises(res.data);
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${auth.accessToken}`,
+                    },
+                    withCredentials: true,
+                };
+
+                const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
+                setExercises(res.data);
+            } catch (error) {
+                console.log(error);
+            }
         };
 
-        if (localStorage.getItem("accessToken")) {
-            fetchExercises();
-            setIsAuthenticated(true);
-            return;
-        }
-
-        setIsAuthenticated(false);
-
-        setTimeout(() => {
-            window.location.href = "/login";
-        }, 2000);
-    }, []);
+        fetchExercises();
+    }, [auth.accessToken]);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -44,6 +42,9 @@ const CreateWorkflow = () => {
             }
         }
 
+        console.log(selectedExercises);
+
+        /*
         axios
             .post(`https://git-workflow-backend.onrender.com/custom`, {
                 userId: 4,
@@ -57,11 +58,12 @@ const CreateWorkflow = () => {
             .catch((err) => {
                 console.log("err", err);
             });
+            */
     };
 
     return (
         <>
-            {isAuthenticated ? (
+            {auth.accessToken ? (
                 <>
                     {" "}
                     <Header loggedIn={true} />
@@ -78,20 +80,27 @@ const CreateWorkflow = () => {
                                 />
                                 <input type="text" placeholder="Description" className="border-2 border-gray-300 p-2" />
                                 {exercises.map((exercise: any, i: number) => (
-                                    <div className="flex gap-2 items-center" key={i}>
-                                        <label
-                                            htmlFor={exercise.exerciseName}
-                                            className="text-lg font-bold text-primary"
-                                        >
-                                            {capitalize(exercise.exerciseName)}
-                                        </label>
-                                        <input
-                                            type="checkbox"
-                                            id={exercise.exerciseName}
-                                            name={exercise.exerciseName}
-                                            value={exercise.exerciseId}
-                                            className="w-5 h-5"
-                                        />
+                                    <div key={i}>
+                                        <div className="flex gap-2 items-center">
+                                            <label
+                                                htmlFor={exercise.exerciseName}
+                                                className="text-lg font-bold text-primary"
+                                            >
+                                                {capitalize(exercise.exerciseName)}
+                                            </label>
+                                            <input
+                                                type="checkbox"
+                                                id={exercise.exerciseName}
+                                                name={exercise.exerciseName}
+                                                value={exercise.exerciseId}
+                                                className="w-5 h-5"
+                                            />
+                                        </div>
+                                        <textarea
+                                            onChange={(e) => console.log(e.target.value)}
+                                            className="w-full h-20 border border-gray-300 p-2"
+                                            value={exercise.description}
+                                        ></textarea>
                                     </div>
                                 ))}
                                 <button className="bg-primary text-white py-2 px-4 rounded-lg">Create Workflow</button>

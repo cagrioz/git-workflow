@@ -1,5 +1,6 @@
 import { GitgraphOptions, templateExtend } from "@gitgraph/core";
 import { Gitgraph, Orientation, TemplateName } from "@gitgraph/react";
+import ProgressBar from "@ramonak/react-progress-bar";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "react-simple-snackbar";
 
@@ -124,6 +125,7 @@ function StageAndCommitSpecificFile({
 
     return (
         <>
+            {!disabled && <ProgressBar completed={Math.round(50 * currentStep)} maxCompleted={Math.round(2 * 50)} />}{" "}
             <Gitgraph options={gitGraphOptions as GitgraphOptions} key={executedCommands.length}>
                 {(gitgraph) => {
                     const master = gitgraph.branch("master");
