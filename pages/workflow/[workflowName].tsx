@@ -128,8 +128,8 @@ const Workflow = () => {
                         </span>
                     </div>
                     <div
-                        className="text-xl mb-12 flex gap-5 flex-col"
-                        dangerouslySetInnerHTML={{ __html: workflowDetails?.workflowDescription }}
+                        className="text-xl mb-12 flex gap-5 flex-col py-6"
+                        dangerouslySetInnerHTML={{ __html: workflowDetails?.workflow_description }}
                     ></div>
 
                     <SnackbarProvider>
