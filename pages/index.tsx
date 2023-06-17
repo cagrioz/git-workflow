@@ -24,7 +24,7 @@ export default function Home() {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("https://git-workflow-backend.onrender.com", config);
+                const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
                 setExercises(res.data);
             } catch (error) {
                 console.log(error);
@@ -45,7 +45,7 @@ export default function Home() {
                 <Header loggedIn={auth?.accessToken ? true : false} />
 
                 <SnackbarProvider>
-                    <div className="container mx-auto">
+                    <div className="container mx-auto mt-16">
                         <div className="flex flex-col gap-10">
                             {exercises.length > 0 &&
                                 exercises.map((exercise, i) => {

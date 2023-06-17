@@ -8,8 +8,20 @@ import { useAuth } from "@app/contexts/AuthContext";
 
 const CreateWorkflow = () => {
     const [exercises, setExercises] = useState<any>([]);
+    const [workflowName, setWorkflowName] = useState<string>("");
+    const [workflowDescription, setWorkflowDescription] = useState<string>("");
 
     const auth = useAuth();
+
+    const handleDescriptionChange = (index: number, newDescription: string) => {
+        setExercises((prevExercises: any) =>
+            prevExercises.map((exercise: any, i: number) =>
+                i === index ? { ...exercise, description: newDescription } : exercise
+            )
+        );
+
+        console.log(exercises);
+    };
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -38,34 +50,38 @@ const CreateWorkflow = () => {
 
         for (let i = 2; i < exercises.length + 2; i++) {
             if (e.target[i].checked) {
-                selectedExercises[e.target[i].value] = e.target[i].name;
+                selectedExercises[e.target[i].value] = e.target[i].dataset.description;
             }
         }
 
-        console.log(selectedExercises);
-
-        /*
         axios
-            .post(`https://git-workflow-backend.onrender.com/custom`, {
-                userId: 4,
-                workflowName: e.target[0].value,
-                description: e.target[1].value,
-                exercises: selectedExercises,
-            })
+            .post(
+                `https://git-workflow-backend.onrender.com/custom`,
+                {
+                    userId: auth.userId,
+                    workflowName: workflowName,
+                    description: workflowDescription,
+                    exercises: selectedExercises,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${auth.accessToken}`,
+                    },
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
                 console.log("res", res);
             })
             .catch((err) => {
                 console.log("err", err);
             });
-            */
     };
 
     return (
         <>
             {auth.accessToken ? (
                 <>
-                    {" "}
                     <Header loggedIn={true} />
                     <div className="container mx-auto mb-16">
                         <h1 className="text-5xl mt-16 mb-16 font-bold text-primary text-center">
@@ -77,8 +93,16 @@ const CreateWorkflow = () => {
                                     type="text"
                                     placeholder="Workflow Name"
                                     className="border-2 border-gray-300 p-2"
+                                    value={workflowName}
+                                    onChange={(e) => setWorkflowName(e.target.value)}
                                 />
-                                <input type="text" placeholder="Description" className="border-2 border-gray-300 p-2" />
+                                <input
+                                    type="text"
+                                    placeholder="Description"
+                                    className="border-2 border-gray-300 p-2"
+                                    value={workflowDescription}
+                                    onChange={(e) => setWorkflowDescription(e.target.value)}
+                                />
                                 {exercises.map((exercise: any, i: number) => (
                                     <div key={i}>
                                         <div className="flex gap-2 items-center">
@@ -93,13 +117,14 @@ const CreateWorkflow = () => {
                                                 id={exercise.exerciseName}
                                                 name={exercise.exerciseName}
                                                 value={exercise.exerciseId}
+                                                data-description={exercise.description}
                                                 className="w-5 h-5"
                                             />
                                         </div>
                                         <textarea
-                                            onChange={(e) => console.log(e.target.value)}
+                                            onChange={(e) => handleDescriptionChange(i, e.target.value)}
                                             className="w-full h-20 border border-gray-300 p-2"
-                                            value={exercise.description}
+                                            value={exercises[i].description}
                                         ></textarea>
                                     </div>
                                 ))}
