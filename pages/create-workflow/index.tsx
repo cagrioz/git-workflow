@@ -5,8 +5,17 @@ import axios from "axios";
 import { capitalize } from "lodash";
 import { useEffect, useState } from "react";
 import { useAuth } from "@app/contexts/AuthContext";
+import { useSnackbar } from "react-simple-snackbar";
 
 const CreateWorkflow = () => {
+    // Success snackbar
+    const [openSuccessSnackbar, closeSuccessSnackbar] = useSnackbar({
+        style: {
+            backgroundColor: "#4caf50",
+            color: "#fff",
+        },
+    });
+
     const [exercises, setExercises] = useState<any>([]);
     const [workflowName, setWorkflowName] = useState<string>("");
     const [workflowDescription, setWorkflowDescription] = useState<string>("");
@@ -71,6 +80,7 @@ const CreateWorkflow = () => {
                 }
             )
             .then((res) => {
+                openSuccessSnackbar(`Successfully created workflow ${workflowName}`);
                 console.log("res", res);
             })
             .catch((err) => {

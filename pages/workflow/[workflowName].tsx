@@ -64,6 +64,7 @@ const Workflow = () => {
                         config
                     );
                     setWorkflowDetails(res.data);
+                    console.log(res.data);
                     setScore(res.data.score.completed);
                     console.log("useeffect score", score);
 
@@ -139,10 +140,10 @@ const Workflow = () => {
                                         <div className="flex flex-col gap-5" key={exercise.exerciseName}>
                                             <div className="flex flex-col gap-2">
                                                 <h2 className="text-2xl font-bold text-primary">
-                                                    {exercise.explanation}
+                                                    {exercise.exerciseName}
                                                 </h2>
                                                 <p className="whitespace-pre-line mt-4 text-xl">
-                                                    {exercise.exerciseName}
+                                                    {exercise.explanation}
                                                 </p>
                                             </div>
                                             {exercise.exerciseId === 1 && (

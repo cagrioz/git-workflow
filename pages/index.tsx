@@ -2,7 +2,6 @@ import Head from "next/head";
 import Commit from "../components/Exercises/Commit";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import SnackbarProvider from "react-simple-snackbar";
 import Branch from "../components/Exercises/Branch";
 import Merge from "../components/Exercises/Merge";
 import { useEffect, useState } from "react";
@@ -44,32 +43,30 @@ export default function Home() {
             <div className="min-h-screen">
                 <Header loggedIn={auth?.accessToken ? true : false} />
 
-                <SnackbarProvider>
-                    <div className="container mx-auto mt-16">
-                        <div className="flex flex-col gap-10">
-                            {exercises.length > 0 &&
-                                exercises.map((exercise, i) => {
-                                    return (
-                                        <div className="flex flex-col gap-5" key={i}>
-                                            <div className="flex flex-col gap-2">
-                                                <h2 className="text-4xl font-bold">{exercise.exerciseName}</h2>
-                                                <p className="whitespace-pre-line mt-4">{exercise.description}</p>
-                                            </div>
-                                            {exercise.exerciseId === 1 && (
-                                                <Commit active={true} updateScore={function () {}} reset={true} />
-                                            )}
-                                            {exercise.exerciseId === 2 && (
-                                                <Branch active={true} updateScore={function () {}} reset={true} />
-                                            )}
-                                            {exercise.exerciseId === 3 && (
-                                                <Merge active={true} updateScore={function () {}} reset={true} />
-                                            )}
+                <div className="container mx-auto mt-16">
+                    <div className="flex flex-col gap-10">
+                        {exercises.length > 0 &&
+                            exercises.map((exercise, i) => {
+                                return (
+                                    <div className="flex flex-col gap-5" key={i}>
+                                        <div className="flex flex-col gap-2">
+                                            <h2 className="text-4xl font-bold">{exercise.exerciseName}</h2>
+                                            <p className="whitespace-pre-line mt-4">{exercise.description}</p>
                                         </div>
-                                    );
-                                })}
-                        </div>
+                                        {exercise.exerciseId === 1 && (
+                                            <Commit active={true} updateScore={function () {}} reset={true} />
+                                        )}
+                                        {exercise.exerciseId === 2 && (
+                                            <Branch active={true} updateScore={function () {}} reset={true} />
+                                        )}
+                                        {exercise.exerciseId === 3 && (
+                                            <Merge active={true} updateScore={function () {}} reset={true} />
+                                        )}
+                                    </div>
+                                );
+                            })}
                     </div>
-                </SnackbarProvider>
+                </div>
 
                 <Footer />
             </div>
