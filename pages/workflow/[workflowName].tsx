@@ -19,6 +19,11 @@ import StageAndCommitSpecificFile from "@app/components/Exercises/StageAndCommit
 import CloneRepo from "@app/components/Exercises/CloneRepo/CloneRepo";
 import PullCommitPushTag from "@app/components/Exercises/PullStageCommitPushTag/PullStageCommitPushTag";
 
+import { default as GFBranch } from "@app/components/GFExercises/Branch";
+import Develop from "@app/components/GFExercises/Develop/Develop";
+import Release from "@app/components/GFExercises/Release/Release";
+import Production from "@app/components/GFExercises/Production/Production";
+
 /*
 export async function getServerSideProps({ params }: any) {
     const { workflow } = params;
@@ -250,6 +255,38 @@ const Workflow = () => {
                                             )}
                                             {exercise.exerciseId === 11 && (
                                                 <PullCommitPushTag
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
+                                            )}
+                                            {exercise.exerciseId === 12 && (
+                                                <Develop
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
+                                            )}
+
+                                            {exercise.exerciseId === 13 && (
+                                                <Release
+                                                    active={index === score}
+                                                    updateScore={() => {
+                                                        setScore((prevScore: number) => prevScore + 1);
+                                                        updateScore(score);
+                                                    }}
+                                                    reset={reset}
+                                                />
+                                            )}
+
+                                            {exercise.exerciseId === 14 && (
+                                                <Production
                                                     active={index === score}
                                                     updateScore={() => {
                                                         setScore((prevScore: number) => prevScore + 1);
