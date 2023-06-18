@@ -43,6 +43,9 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                             <Link href="/login" className="py-2 px-3 font-medium" >
                                 Login
                             </Link>
+                            <Link href="/register" className="py-2 px-3 font-medium">
+                                Register
+                            </Link>
                         ) }
                     </div>
                 </div>
