@@ -42,7 +42,7 @@ const CreateWorkflow = () => {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
+                const res = await axios.get("http://localhost:8000/exercises", config);
                 setExercises(res.data);
             } catch (error) {
                 console.log(error);
@@ -65,7 +65,7 @@ const CreateWorkflow = () => {
 
         axios
             .post(
-                `https://git-workflow-backend.onrender.com/custom`,
+                `http://localhost:8000/custom`,
                 {
                     userId: auth.userId,
                     workflowName: workflowName,

@@ -21,7 +21,7 @@ const Workflows = () => {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("https://git-workflow-backend.onrender.com/workflows", config);
+                const res = await axios.get("http://localhost:8000/workflows", config);
                 setWorkflows(res.data);
             } catch (error) {
                 console.log(error);

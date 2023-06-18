@@ -65,7 +65,7 @@ const Workflow = () => {
                     };
 
                     const res = await axios.get(
-                        `https://git-workflow-backend.onrender.com/workflows/course?workflowName=${workflowName}&userId=${auth.userId}`,
+                        `http://localhost:8000/workflows/course?workflowName=${workflowName}&userId=${auth.userId}`,
                         config
                     );
                     setWorkflowDetails(res.data);
@@ -86,7 +86,7 @@ const Workflow = () => {
     function updateScore(score: number) {
         axios
             .post(
-                "https://git-workflow-backend.onrender.com/workflows/",
+                "http://localhost:8000/workflows/",
                 {
                     userId: auth.userId,
                     workflowName: workflowName,
