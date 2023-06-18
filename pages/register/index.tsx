@@ -110,14 +110,14 @@ export default function Register() {
                                     required
                                 />
                                 <button className="py-2 px-3 bg-primary text-white font-medium rounded-md">
-                                    Login
+                                    Register
                                 </button>
                             </form>
 
                             <div className="mt-5">
                                 <p className="text-primary">
                                     Already have an account?
-                                    <Link href="/register" className="py-2 px-1 font-bold">
+                                    <Link href="/login" className="py-2 px-1 font-bold">
                                         Log in
                                     </Link>
                                 </p>
