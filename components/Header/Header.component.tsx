@@ -14,11 +14,12 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                         </Link>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Link href="/workflows" className="py-2 px-3 font-medium">
-                            Workflows
-                        </Link>
+                        
                         {loggedIn ? (
                             <>
+                                <Link href="/workflows" className="py-2 px-3 font-medium">
+                                Workflows
+                                </Link>
                                 <Link
                                     href="/create-workflow"
                                     className="py-2 px-3 font-medium bg-white rounded-xl text-primary"
@@ -38,11 +39,11 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                                     Logout
                                 </Link>
                             </>
-                        ) : (
-                            <Link href="/login" className="py-2 px-3 font-medium">
+                        ): (
+                            <Link href="/login" className="py-2 px-3 font-medium" >
                                 Login
                             </Link>
-                        )}
+                        ) }
                     </div>
                 </div>
             </div>
