@@ -1,13 +1,13 @@
 import Head from "next/head";
-import Commit from "../components/Exercises/Commit";
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Branch from "../components/Exercises/Branch";
-import Merge from "../components/Exercises/Merge";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "@app/contexts/AuthContext";
 import { access } from "fs";
+import { capitalize } from "lodash";
 
 export default function Home() {
     const auth = useAuth();
