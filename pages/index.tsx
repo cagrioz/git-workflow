@@ -45,26 +45,7 @@ export default function Home() {
 
                 <div className="container mx-auto mt-16">
                     <div className="flex flex-col gap-10">
-                        {exercises.length > 0 &&
-                            exercises.map((exercise, i) => {
-                                return (
-                                    <div className="flex flex-col gap-5" key={i}>
-                                        <div className="flex flex-col gap-2">
-                                            <h2 className="text-4xl font-bold">{exercise.exerciseName}</h2>
-                                            <p className="whitespace-pre-line mt-4">{exercise.description}</p>
-                                        </div>
-                                        {exercise.exerciseId === 1 && (
-                                            <Commit active={true} updateScore={function () {}} reset={true} />
-                                        )}
-                                        {exercise.exerciseId === 2 && (
-                                            <Branch active={true} updateScore={function () {}} reset={true} />
-                                        )}
-                                        {exercise.exerciseId === 3 && (
-                                            <Merge active={true} updateScore={function () {}} reset={true} />
-                                        )}
-                                    </div>
-                                );
-                            })}
+                        
                     </div>
                 </div>
 
