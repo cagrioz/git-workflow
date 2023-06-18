@@ -17,9 +17,6 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                         <Link href="/workflows" className="py-2 px-3 font-medium">
                             Workflows
                         </Link>
-                        <Link href="/exercises" className="py-2 px-3 font-medium">
-                            Exercises
-                        </Link>
                         {loggedIn ? (
                             <>
                                 <Link
