@@ -23,8 +23,8 @@ export default function Home() {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
-                setExercises(res.data);
+                //const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
+                //setExercises(res.data);
             } catch (error) {
                 console.log(error);
             }
