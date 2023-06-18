@@ -11,7 +11,7 @@ import { access } from "fs";
 
 export default function Home() {
     const auth = useAuth();
-    const [exercises, setExercises] = useState<any[]>([]);
+    const [workflows, setWorkflows] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -23,8 +23,8 @@ export default function Home() {
                     withCredentials: true,
                 };
 
-                const res = await axios.get("https://git-workflow-backend.onrender.com/exercises", config);
-                setExercises(res.data);
+                const res = await axios.get("https://git-workflow-backend.onrender.com/workflows", config);
+                setWorkflows(res.data);
             } catch (error) {
                 console.log(error);
             }
@@ -43,11 +43,22 @@ export default function Home() {
             <div className="min-h-screen">
                 <Header loggedIn={auth?.accessToken ? true : false} />
 
-                <div className="container mx-auto mt-16">
-                    <div className="flex flex-col gap-10">
-                        
-                    </div>
+                <div className="container mx-auto mb-16">
+                <h1 className="text-5xl mt-24 mb-16 font-bold text-primary text-center">Workflows</h1>
+                <div className="grid grid-cols-3 mt-10 gap-8">
+                    {workflows.map((workflow: any, i: number) => (
+                        <Link
+                            href={`/workflow/${workflow.workflowName}`}
+                            className="flex flex-col h-52 items-center justify-center rounded-2xl gap-2 py-10 px-16 bg-primaryLight hover:bg-primary transition-all duration-200 ease-in-out"
+                            key={i}
+                        >
+                            <h3 className="text-2xl font-bold text-white">
+                                {capitalize(workflow.workflowName)} Workflow
+                            </h3>
+                        </Link>
+                    ))}
                 </div>
+            </div>
 
                 <Footer />
             </div>
