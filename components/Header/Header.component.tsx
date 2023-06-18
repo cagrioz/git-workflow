@@ -40,12 +40,14 @@ function Header({ loggedIn }: { loggedIn: boolean }) {
                                 </Link>
                             </>
                         ): (
-                            <Link href="/login" className="py-2 px-3 font-medium" >
-                                Login
-                            </Link>
-                            <Link href="/register" className="py-2 px-3 font-medium">
-                                Register
-                            </Link>
+                            <div> {/* Wrap the two Link components within a parent element */}
+                                <Link href="/login" className="py-2 px-3 font-medium" >
+                                    Login
+                                </Link>
+                                <Link href="/register" className="py-2 px-3 font-medium">
+                                    Register
+                                </Link>
+                            </div>
                         ) }
                     </div>
                 </div>
