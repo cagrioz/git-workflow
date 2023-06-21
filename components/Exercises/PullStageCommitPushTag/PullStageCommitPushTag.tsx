@@ -90,11 +90,11 @@ function PullStageCommitPushTag({ active, updateScore, reset }: { active: boolea
                 return;
             }
 
-            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            openSuccessSnackbar("Correct command!");
         } else if (currentStep === 1) {
             if (command == "git add .") {
                 // Snackbar green background
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;
@@ -105,7 +105,7 @@ function PullStageCommitPushTag({ active, updateScore, reset }: { active: boolea
 
             if (message[0] == "git commit -m ") {
                 // Snackbar green background
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;
@@ -113,7 +113,7 @@ function PullStageCommitPushTag({ active, updateScore, reset }: { active: boolea
         } else if (currentStep === 3) {
             // Check if the command is correct
             if (command == "git push origin master") {
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;

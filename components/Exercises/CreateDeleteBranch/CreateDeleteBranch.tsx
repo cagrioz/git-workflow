@@ -99,7 +99,7 @@ function CreateDeleteBranch({ active, updateScore, reset }: { active: boolean; u
                     setBranchName(branchName);
                 }
 
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;

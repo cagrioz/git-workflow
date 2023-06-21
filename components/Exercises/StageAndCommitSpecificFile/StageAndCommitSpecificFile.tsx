@@ -99,7 +99,7 @@ function StageAndCommitSpecificFile({
                 return;
             }
 
-            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            openSuccessSnackbar("Correct command!");
         } else if (currentStep === 1) {
             // Check if the command is correct
             const message = command.split("'");

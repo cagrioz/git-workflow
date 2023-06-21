@@ -90,14 +90,14 @@ function PullCommitPush({ active, updateScore, reset }: { active: boolean; updat
                 return;
             }
 
-            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            openSuccessSnackbar("Correct command!");
         } else if (currentStep === 1) {
             // Check if the command is correct
             const message = command.split("'");
 
             if (message[0] == "git commit -m ") {
                 // Snackbar green background
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;

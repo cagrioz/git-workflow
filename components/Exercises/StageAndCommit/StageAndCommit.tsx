@@ -90,7 +90,7 @@ function StageAndCommit({ active, updateScore, reset }: { active: boolean; updat
             const message2 = command.split("git branch ");
 
             if (message[0] == "git checkout " || (message2 && message2[1]?.length > 0)) {
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;
@@ -103,14 +103,14 @@ function StageAndCommit({ active, updateScore, reset }: { active: boolean; updat
                 return;
             }
 
-            openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+            openSuccessSnackbar("Correct command!");
         } else if (currentStep === 2) {
             // Check if the command is correct
             const message = command.split("'");
 
             if (message[0] == "git commit -m ") {
                 // Snackbar green background
-                openSuccessSnackbar("Correct command! You can now continue to the next exercise");
+                openSuccessSnackbar("Correct command!");
             } else {
                 openErrorSnackbar("Command not correct");
                 return;
